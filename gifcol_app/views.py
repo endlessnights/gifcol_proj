@@ -52,7 +52,7 @@ def a_logout(request):
     built_in_logout(request)
     return redirect('/')
 
-# Create New TT
+# Загрузить новый файл
 def new_mediafile(request):
     if request.method == "POST":
         form = MediaAddForm(request.POST, request.FILES)
