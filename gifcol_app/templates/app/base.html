@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/masonry.css' %}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Meme Archive</title>
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="/">Гифки</a>
+    <a class="navbar-brand" href="/video">Видео</a>
+    <a class="navbar-brand" href="/img">Картинки</a>
+    <a class="navbar-brand" href="#">Войти</a>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/animated-masonry-gallery.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/jquery-2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/animated-masonry-gallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.min.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="/">Гифки</a>
+    <a class="navbar-brand" href="/video">Видео</a>
+    <a class="navbar-brand" href="/img">Картинки</a>
+    <a class="navbar-brand" href="#">Войти</a>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

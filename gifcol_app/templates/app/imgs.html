@@ -1,0 +1,17 @@
+{% extends 'app/base-img.html' %}
+{% block content %}
+</body>
+    <div class="masonry bordered">
+    <div id="gallery-content">
+        <div id="gallery-content-center" style="position: relative; overflow: hidden; height: 1200px;" class="gallery-content-center-full isotope">
+            {% for mediamodel in imgposts %}
+            <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.desc}}">
+                <img class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</body>
+{% endblock %}
+</html>
