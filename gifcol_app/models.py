@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 
-# Create your models here.
+# Модель Медиа-файлов
 class mediamodel(models.Model):
     filetypes = (
         ('gif', 'Гифка'),
