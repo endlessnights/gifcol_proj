@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/masonry.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -14,7 +14,17 @@
     <a class="navbar-brand" href="/">Гифки</a>
     <a class="navbar-brand" href="/video">Видео</a>
     <a class="navbar-brand" href="/img">Картинки</a>
-    <a class="navbar-brand" href="#">Войти</a>
+    {% if user.is_authenticated %}
+    <a style="float:right;" class="navbar-brand" href="/logout">Выйти</a>
+    {%endif%}
+    {% if not user.is_authenticated %}
+    <form style="float:right;padding-top:1em;" id="login" method="post" action="{% url 'a_login' %}">
+        {% csrf_token %}
+        <input style="width:120px;" type="text" name="username" id="InputUsername"  placeholder="Введите логин">
+        <input style="width:120px;" type="password" name="password" id="InputPassword" placeholder="Введите пароль">
+        <button style="margin-left:2px;" type="submit"> Войти</button>
+    </form>
+    {%endif%}
 </nav>
 {% block content %}
 {% endblock %}
