@@ -4,6 +4,7 @@ from django.contrib.auth import (
     authenticate, login as built_in_login, logout as built_in_logout)
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .forms import MediaAddForm
 
 # Create your views here.
 from django.views.decorators.http import require_POST
@@ -50,3 +51,18 @@ def a_login(request):
 def a_logout(request):
     built_in_logout(request)
     return redirect('/')
+
+# Create New TT
+def new_mediafile(request):
+    if request.method == "POST":
+        form = MediaAddForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.created_date = timezone.now()
+            post.save()
+        return redirect('/')
+    else:
+        form = MediaAddForm()
+    return render(request, 'app/edit.html',
+                  {'form': form})

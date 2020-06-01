@@ -1,0 +1,57 @@
+{% extends 'app/base-img.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% if user.is_authenticated %}
+<form method="post" enctype="multipart/form-data" style="padding-left:15px;">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-2">
+            {{ form.title|as_crispy_field }}
+        </div>
+        <div class="col-md-2">
+            {{ form.desc|as_crispy_field }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2">
+            {{ form.filetype|as_crispy_field }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <h4>Если выбрано: Картинка</h4>
+            <!--{% if form.filetype.value == "gif" %}-->
+            {{ form.media_img|as_crispy_field }}
+            <!--{%endif%}-->
+        </div>
+        <div class="col-md-3">
+            <h4>Если выбрано: Гифка</h4>
+            <!--{% if form.filetype.value == "gif" %}-->
+            {{ form.media_gif|as_crispy_field }}
+            <!--{%endif%}-->
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <h4>Если выбрано: Видео</h4>
+            <!--{% if form.filetype.value == "gif" %}-->
+            {{ form.media_video|as_crispy_field }}
+            <!--{%endif%}-->
+        </div>
+        <div class="col-md-3">
+            <h4>Если выбрано: Ссылка на видео</h4>
+            <!--{% if form.filetype.value == "gif" %}-->
+            {{ form.medialink|as_crispy_field }}
+            <!--{%endif%}-->
+        </div>
+    </div>
+    <br>
+<button type="submit" class="btn btn-primary">Загрузить файл</button>
+
+</form>
+{%endif%}
+{% endblock %}
+</html>

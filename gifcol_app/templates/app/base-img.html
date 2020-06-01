@@ -18,6 +18,7 @@
     <a class="navbar-brand" href="/video">Видео</a>
     <a class="navbar-brand" href="/img">Картинки</a>
     {% if user.is_authenticated %}
+    <button style="margin-top:0.5em;margin-left:50px;" class="btn btn-success"><a style="color:white;" href="/new">Загрузить файл</a></button>
     <a style="float:right;" class="navbar-brand" href="/logout">Выйти</a>
     {%endif%}
         {% if not user.is_authenticated %}

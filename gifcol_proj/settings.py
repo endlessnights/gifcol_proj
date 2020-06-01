@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gifcol_app',
+    'crispy_forms',
 ]
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
