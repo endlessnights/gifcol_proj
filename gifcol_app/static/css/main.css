@@ -30,7 +30,7 @@ img, video {
 /* Bordered masonry */
 .masonrygal.bordered {
   column-rule: 1px solid #eee;
-  column-gap: 50px;
+  column-gap: 20px;
 }
 
 .masonrygal.bordered .brick {
