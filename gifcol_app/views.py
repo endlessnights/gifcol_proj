@@ -47,10 +47,17 @@ def imgpage(request):
 # Профиль пользователя
 def get_user_profile(request, username):
     userprofile = User.objects.get(username=username)
-    imgs_added_by_user = mediamodel.objects.filter(author=userprofile, filetype='img')  # список файлов, добавленных пользователем
+    imgs_added_by_user = mediamodel.objects.filter(author=userprofile,
+                                                   filetype='img')  # список картинок, добавленных пользователем
+    gifs_added_by_user = mediamodel.objects.filter(author=userprofile,
+                                                   filetype='gif')  # список картинок, добавленных пользователем
+    videos_added_by_user = mediamodel.objects.filter(author=userprofile,
+                                                   filetype='video')  # список картинок, добавленных пользователем
     return render(request, 'app/user_profile.html', {
         "user": userprofile,
         "imgs_added_by_user": imgs_added_by_user,
+        "gifs_added_by_user": gifs_added_by_user,
+        "videos_added_by_user": videos_added_by_user,
     })
 # Настройки профиля
 def edit_profile(request):

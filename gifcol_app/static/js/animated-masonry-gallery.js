@@ -25,7 +25,7 @@ function check_button(){
 		$("#gallery-header-center-left-title").html('Landscape Gallery');
 		}	
 }
-	
+
 function check_size(){
 	$("#gallery-content-center").removeClass(normal_size_class).removeClass(full_size_class);
 	if(size==0){
