@@ -2,21 +2,34 @@
 <html lang="en">
 <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/animated-masonry-gallery.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/jquery-2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/animated-masonry-gallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/lightbox.min.js' %}"></script>
     <meta charset="UTF-8">
     <title>Meme Archive</title>
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;margin-bottom:0px;">
     <a class="navbar-brand" href="/">Гифки</a>
     <a class="navbar-brand" href="/video">Видео</a>
     <a class="navbar-brand" href="/img">Картинки</a>
     {% if user.is_authenticated %}
     <button style="margin-top:0.5em;margin-left:50px;" class="btn btn-success"><a style="color:white;" href="/new">Загрузить файл</a></button>
-    <a style="float:right;" class="navbar-brand" href="/logout">Выйти</a>
+    <div class="dropdown" style="float:right;">
+        <button class="dropbtn">{{request.user.get_short_name}} [{{request.user.username}}]</button>
+        <div class="dropdown-content">
+            <a href="{% url 'get_user_profile' username=request.user %}">Профиль</a>
+            <a href="/user/settings/">Настройки</a>
+            <a href="/logout">Выйти</a>
+        </div>
+    </div>
     {%endif%}
     {% if not user.is_authenticated %}
     <form style="float:right;padding-top:1em;" id="login" method="post" action="{% url 'a_login' %}">

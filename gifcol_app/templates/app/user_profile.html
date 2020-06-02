@@ -1,0 +1,92 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+      <title>
+         Профиль {{user.get_full_name}} | FunGif
+      </title>
+</body>
+<style>
+.parallax {
+  /* The image used */
+  background-image: url("/media/covers/user-cover-default.png");
+
+  /* Set a specific height */
+  height: 200px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+<div class="parallax"></div>
+    <div class="row" style="margin:15px;" align="center">
+            <h3>Профиль пользователя {{ user.username }}</h3>
+                        <div class="row">
+               <div class="col-sm-12" title="{{user.date_joined|timesince}} назад">
+                  Дата регистрации: {{user.date_joined}}
+               </div>
+            </div>
+        <div class="row">
+                    <div class="col-sm-12">
+                  Полное имя: {{user.get_full_name}}
+                    </div>
+                </div>
+        {% if request.user == user %}
+            <div class="row">
+               <div class="col-sm-12">
+                  E-mail: {{user.email}}
+               </div>
+            </div>
+            <br>
+            <div class="row">
+               <div class="col-sm-12">
+                  <a href="/user/settings/">Настройки профиля</a>
+               </div>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="user_favs_tab" data-toggle="tab" href="#user_favs" role="tab" aria-controls="home" aria-selected="true">Избранное пользователя</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="user_upl_gifs_tab" data-toggle="tab" href="#user_upl_gifs" role="tab" aria-controls="profile" aria-selected="false">Загруженные Гифки</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="user_upl_videos_tab" data-toggle="tab" href="#user_upl_videos" role="tab" aria-controls="contact" aria-selected="false">Загруженные Видео</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="user_upl_imgs_tab" data-toggle="tab" href="#user_upl_imgs" role="tab" aria-controls="contact" aria-selected="false">Загруженные Картинки</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="user_favs" role="tabpanel" aria-labelledby="user_favs_tab">
+    <div class="masonry bordered">
+    <div id="gallery-content">
+        <div id="gallery-content-center" style="position: relative; overflow: hidden; height: 1200px;" class="gallery-content-center-full isotope">
+            {% for mediamodel in files_added_by_user %}
+            <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.desc}}">
+                <img class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="user_upl_gifs" role="tabpanel" aria-labelledby="user_upl_gifs_tab">
+
+  </div>
+  <div class="tab-pane fade" id="user_upl_videos" role="tabpanel" aria-labelledby="user_upl_videos_tab">
+
+  </div>
+  <div class="tab-pane fade" id="user_upl_imgs" role="tabpanel" aria-labelledby="user_upl_imgs_tab">
+
+  </div>
+</div>
+</body>
+{% endif %}
+{% endblock %}
+</html>

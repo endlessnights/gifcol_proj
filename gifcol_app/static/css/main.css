@@ -4,53 +4,53 @@ img, video {
   vertical-align: top;
 }
 /* Masonry grid */
-.masonry {
+.masonrygal {
   transition: all .2s ease-in-out;
   column-gap: 20px;
   column-fill: initial;
 }
 
 /* Masonry item */
-.masonry .brick {
+.masonrygal .brick {
   margin-bottom: 30px;
   display: inline-block; /* Fix the misalignment of items */
   vertical-align: top; /* Keep the item on the very top */
 }
 
 /* Masonry image effects */
-.masonry .brick img {
+.masonrygal .brick img {
   transition: all .1s ease-in-out;
   backface-visibility: hidden; /* Remove Image flickering on hover */
 }
 
-.masonry .brick:hover img {
+.masonrygal .brick:hover img {
   opacity: .75;
 }
 
 /* Bordered masonry */
-.masonry.bordered {
+.masonrygal.bordered {
   column-rule: 1px solid #eee;
   column-gap: 50px;
 }
 
-.masonry.bordered .brick {
+.masonrygal.bordered .brick {
   padding-bottom: 25px;
   margin-bottom: 25px;
   border-bottom: 1px solid #eee;
 }
 
 /* Gutterless masonry */
-.masonry.gutterless {
+.masonrygal.gutterless {
   column-gap: 0;
 }
 
-.masonry.gutterless .brick {
+.masonrygal.gutterless .brick {
   margin-bottom: 0;
 }
 
 /* Masonry on tablets */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
-  .masonry {
+  .masonrygal {
     column-count: 3;
   }
 }
@@ -65,7 +65,51 @@ img, video {
     letter-spacing: 1px;
   }
 
-  .masonry {
+  .masonrygal {
     column-count: 6;
   }
+}
+ /* Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.contaner-profile{
+padding-left:15px;
 }
