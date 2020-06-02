@@ -20,36 +20,58 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-md-3">
-            <h4>Если выбрано: Картинка</h4>
-            <!--{% if form.filetype.value == "gif" %}-->
+        <div class="col-md-3" id="id_media_img">
             {{ form.media_img|as_crispy_field }}
-            <!--{%endif%}-->
         </div>
-        <div class="col-md-3">
-            <h4>Если выбрано: Гифка</h4>
-            <!--{% if form.filetype.value == "gif" %}-->
+        <div class="col-md-3" id="id_media_gif">
             {{ form.media_gif|as_crispy_field }}
-            <!--{%endif%}-->
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col-md-3">
-            <h4>Если выбрано: Видео</h4>
-            <!--{% if form.filetype.value == "gif" %}-->
+        <div class="col-md-3" id="id_media_video">
             {{ form.media_video|as_crispy_field }}
-            <!--{%endif%}-->
         </div>
-        <div class="col-md-3">
-            <h4>Если выбрано: Ссылка на видео</h4>
-            <!--{% if form.filetype.value == "gif" %}-->
+        <div class="col-md-3" id="id_media_link">
             {{ form.medialink|as_crispy_field }}
-            <!--{%endif%}-->
         </div>
     </div>
     <br>
 <button type="submit" class="btn btn-primary">Загрузить файл</button>
+<script>
+$(document).ready( function () {
+  $('#id_media_img').hide();
+  $('#id_media_video').hide();
+  $('#id_media_link').hide();
+});
+
+
+$("#id_filetype").change(function() {
+  if ($(this).val() == "gif") {
+    $('#id_media_gif').show();
+  } else {
+    $('#id_media_gif').hide();
+    $('#id_media_img').hide();
+    $('#id_media_video').hide();
+    $('#id_media_link').hide();
+  }
+  if ($(this).val() == "img") {
+    $('#id_media_img').show();
+  } else {
+    $('#id_media_img').hide();
+  }
+  if ($(this).val() == "video") {
+    $('#id_media_video').show();
+  } else {
+    $('#id_media_video').hide();
+  }
+  if ($(this).val() == "link") {
+    $('#id_media_link').show();
+  } else {
+    $('#id_media_link').hide();
+  }
+});
+</script>
 
 </form>
 {%endif%}
