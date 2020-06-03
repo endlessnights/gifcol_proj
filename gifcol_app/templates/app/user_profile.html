@@ -6,10 +6,10 @@
       </title>
 </body>
 <style>
+{% load static %}
 .parallax {
   /* The image used */
-  background-image: url("/media/covers/user-cover-default.png");
-
+  background-image: url("{% static '/img/user-cover-default.png' %}");
   /* Set a specific height */
   height: 200px;
 
