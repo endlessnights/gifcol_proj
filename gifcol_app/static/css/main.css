@@ -3,8 +3,8 @@ img,video{max-width:100%;vertical-align:top}
 .masonrygal .brick{margin-bottom:30px;display:inline-block;vertical-align:top}
 .masonrygal .brick img{transition:all .1s ease-in-out;backface-visibility:hidden}
 .masonrygal .brick:hover img{opacity:.75}
-.masonrygal.bordered{column-rule:1px solid #eee;column-gap:10px;display:flex;}
-.masonrygal.bordered .brick{padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #eee;}
+.masonrygal.bordered{column-rule:1px solid #eee;column-gap:5px;}
+.masonrygal.bordered .brick{padding-bottom:5px;margin-bottom:5px;border-bottom:1px solid #eee;}
 .masonrygal.gutterless{column-gap:0;display:flex;}
 .masonrygal.gutterless .brick{margin-bottom:0}
 @media only screen and (min-width: 768px) {
@@ -13,13 +13,13 @@ img,video{max-width:100%;vertical-align:top}
 @media only screen and (orientation: album) and (min-width: 1024px) {
 .desc{font-size:1.25em}
 .intro{letter-spacing:1px}
-.masonrygal{column-count:6}
+.masonrygal{column-count:8}
 }
 
 @media only screen and (min-width: 2000px) {
 .desc{font-size:1.25em}
 .intro{letter-spacing:1px}
-.masonrygal{column-count:10}
+.masonrygal{column-count:6}
 }
 .dropbtn{background-color:#4CAF50;color:#fff;padding:16px;font-size:16px;border:none}
 .dropdown{position:relative;display:inline-block}
@@ -40,4 +40,138 @@ img,video{max-width:100%;vertical-align:top}
 #id_media_gif
 {
 color:white;
+}
+
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+  max-height:100%;
+  overflow-y: auto;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+#close-span{
+float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+.hvrbox,
+.hvrbox * {
+	box-sizing: border-box;
+}
+.hvrbox {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	max-width: 100%;
+	height: auto;
+}
+.hvrbox img {
+	max-width: 100%;
+}
+.hvrbox .hvrbox-layer_bottom {
+	display: block;
+}
+.hvrbox .hvrbox-layer_top {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	padding: 15px;
+	-moz-transition: all 0.4s ease-in-out 0s;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	-ms-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
+}
+.hvrbox:hover .hvrbox-layer_top,
+.hvrbox.active .hvrbox-layer_top {
+	opacity: 1;
+}
+.hvrbox .hvrbox-zoom {
+	text-align: center;
+	font-size: 12px;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+.hvrbox .hvrbox-zoom_mobile {
+	font-size: 15px;
+	border-top: 1px solid rgb(179, 179, 179); /* for old browsers */
+	border-top: 1px solid rgba(179, 179, 179, 0.3);
+	margin-top: 5px;
+	padding-top: 2px;
+	display: none;
+}
+.hvrbox.active .hvrbox-zoom_mobile {
+	display: block;
+}
+
+.hvrbox .hvrbox-fav {
+	text-align: center;
+	font-size: 24px;
+	display: inline-block;
+	position: absolute;
+	top: 20px;
+	right: 8px;
+	-moz-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+.hvrbox .hvrbox-fav_mobile {
+	font-size: 15px;
+	margin-top: 5px;
+	padding-top: 2px;
+	display: none;
+}
+.hvrbox.active .hvrbox-fav_mobile {
+	display: block;
 }

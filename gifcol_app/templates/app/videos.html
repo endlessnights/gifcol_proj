@@ -1,10 +1,79 @@
 {% extends 'app/base.html' %}
-{% block content %} </body>
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+</body>
+
+
+
 <div class="masonrygal bordered">
     {% for mediamodel in videoposts %}
 	<div class="brick">
-		<video src="{{mediamodel.media_video.url}}"></video>
-	</div> {% endfor %} </div>
+        <div class="hvrbox">
+            <video src="{{mediamodel.media_video.url}}"></video>
+            <div class="hvrbox-layer_top">
+                <div style="float:right;" id="myBtn{{ forloop.counter }}" class="hvrbox-zoom">
+                    <i style="font-size:24pt;" class="fas fa-search"></i>
+                </div>
+                <div class="hvrbox-fav"><i class="fas fa-star"></i></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% for mediamodel in videoposts %}
+<!-- The Modal -->
+<div id="myModal{{ forloop.counter }}" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content" style="width:900px;" style="overflow-y: scroll;">
+      <span style="padding-bottom:15px;" class="close-btn{{ forloop.counter }}" id="close-span">
+          <button>Вернуться</button>
+      </span>
+      <div class="row" align="left">
+		  <div class="col-sm-8"><video style="max-height:700px;" src="{{mediamodel.media_video.url}}"></video></div>
+		  <div class="col-sm-4"><a href="#">Добавить в избранное <i class="fas fa-star"></i></a><br>
+         {%if mediamodel.title%}Название: {{mediamodel.title}}{%endif%}
+              <br>{%if mediamodel.desc%}Описание: {{mediamodel.desc}}}{%endif%}
+              <br>Автор: {{mediamodel.author}}
+              <br>Дата загрузки: {{mediamodel.created_date}}
+          </div>
+      </div>
+  </div>
+</div>
+{% endfor %}
+<!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
+
+<script>
+{% for mediamodel in videoposts %}
+    // Get the modal
+var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn{{ forloop.counter }}");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close-btn{{ forloop.counter }}")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal{{ forloop.counter }}.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal{{ forloop.counter }}.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal{{ forloop.counter }}) {
+    modal{{ forloop.counter }}.style.display = "none";
+  }
+}
+{% endfor %}
+</script>
 </body>
 {% endblock %}
 </html>
