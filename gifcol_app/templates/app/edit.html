@@ -1,4 +1,5 @@
 {% extends 'app/base.html' %} {% block content %} {% load crispy_forms_tags %} {% if user.is_authenticated %}
+<title>Загрузить файл | Meme Archive</title>
 <body style="background-image: url(https://source.unsplash.com/1600x900/?lego);background-size:cover;">
 <form method="post" enctype="multipart/form-data" style="padding-left:15px;"> {% csrf_token %}
 	<br>
