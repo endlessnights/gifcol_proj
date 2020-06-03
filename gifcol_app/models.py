@@ -12,7 +12,7 @@ class mediamodel(models.Model):
     )
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор', default='root')
     title = models.CharField(null=True, blank=True, verbose_name='Название', max_length=100)
-    desc = models.CharField(null=True, blank=True, verbose_name='Описание', max_length=100)
+    desc = models.TextField(null=True, blank=True, verbose_name='Описание', max_length=200)
     media_gif = models.FileField(upload_to='gif/', verbose_name='Загрузка GIF', max_length=100, null=True,
                                  blank=True)
     media_video = models.FileField(upload_to='video/', verbose_name='Загрузка Видео', max_length=100, null=True,

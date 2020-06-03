@@ -1,13 +1,10 @@
 {% extends 'app/base.html' %}
-{% block content %}
-</body>
-    <div class="masonrygal bordered">
+{% block content %} </body>
+<div class="masonrygal bordered">
     {% for mediamodel in videoposts %}
-        <div class="brick">
-            <video src="{{mediamodel.media_video.url}}"></video>
-        </div>
-    {% endfor %}
-    </div>
+	<div class="brick">
+		<video src="{{mediamodel.media_video.url}}"></video>
+	</div> {% endfor %} </div>
 </body>
 {% endblock %}
 </html>

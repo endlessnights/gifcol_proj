@@ -9,7 +9,6 @@ var $container = $('#gallery-content-center');
     
 $container.isotope({itemSelector : 'img'});
 
-
 function check_button(){
 	$('.gallery-header-center-right-links').removeClass(button_class);
 	if(button==1){
@@ -38,14 +37,10 @@ function check_size(){
 		}
 	$container.isotope({itemSelector : 'img'});
 }
-
-
-	
 $("#filter-all").click(function() { $container.isotope({ filter: '.all' }); button = 1; check_button(); });
 $("#filter-studio").click(function() {  $container.isotope({ filter: '.studio' }); button = 2; check_button();  });
 $("#filter-landscape").click(function() {  $container.isotope({ filter: '.landscape' }); button = 3; check_button();  });
 $("#gallery-header-center-left-icon").click(function() { if(size==0){size=1;}else if(size==1){size=0;} check_size(); });
-
 
 check_button();
 check_size();

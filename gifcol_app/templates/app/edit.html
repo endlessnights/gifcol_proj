@@ -1,79 +1,81 @@
-{% extends 'app/base.html' %}
-{% block content %}
-{% load crispy_forms_tags %}
-{% if user.is_authenticated %}
-<form method="post" enctype="multipart/form-data" style="padding-left:15px;">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-md-2">
-            {{ form.title|as_crispy_field }}
-        </div>
-        <div class="col-md-2">
-            {{ form.desc|as_crispy_field }}
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-2">
-            {{ form.filetype|as_crispy_field }}
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-3" id="id_media_img">
-            {{ form.media_img|as_crispy_field }}
-        </div>
-        <div class="col-md-3" id="id_media_gif">
-            {{ form.media_gif|as_crispy_field }}
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-3" id="id_media_video">
-            {{ form.media_video|as_crispy_field }}
-        </div>
-        <div class="col-md-3" id="id_media_link">
-            {{ form.medialink|as_crispy_field }}
-        </div>
-    </div>
-    <br>
-<button type="submit" class="btn btn-primary">Загрузить файл</button>
-<script>
-$(document).ready( function () {
-  $('#id_media_img').hide();
-  $('#id_media_video').hide();
-  $('#id_media_link').hide();
-});
+{% extends 'app/base.html' %} {% block content %} {% load crispy_forms_tags %} {% if user.is_authenticated %}
+<body style="background-image: url(https://source.unsplash.com/1600x900/?lego);background-size:cover;">
+<form method="post" enctype="multipart/form-data" style="padding-left:15px;"> {% csrf_token %}
+	<br>
+<div class="form-box">
+		<div class="col">{{ form.filetype|as_crispy_field }}</div>
+        <div class="w-100" style="padding-bottom:0.5em;"></div>
+        <div class="col">{{ form.title|as_crispy_field }}</div>
+		<div class="w-100" style="padding-bottom:0.5em;"></div>
+		<div class="col">{{ form.desc|as_crispy_field }}</div>
+		<div class="w-100"></div>
+		<div class="col">
+			<p class="control-label" id="textCounter" style="font:15px Arial;">Не более 200 символов</p>
+		</div>
+		<div class="w-100"></div>
+		<div class="col" id="id_media_img">{{ form.media_img|as_crispy_field }}</div>
+		<div class="w-100"></div>
+		<div class="col" id="id_media_gif">{{ form.media_gif|as_crispy_field }}</div>
+		<div class="w-100"></div>
+		<div class="col" id="id_media_video">{{ form.media_video|as_crispy_field }}</div>
+		<div class="w-100"></div>
+		<div class="col" id="id_media_link">{{ form.medialink|as_crispy_field }}</div>
+		<div class="w-100" style="padding-bottom:2%;"></div>
+		<div class="col">
+			<button id="submitbtn" type="submit" class="btn btn-primary">Загрузить файл</button>
+		</div>
+</div>
+	<script>
+	//text limit for text area
+	$(document).ready(function() {
+		$('#id_desc').on('input propertychange', function() {
+			CharLimit(this, 200);
+		});
+	});
 
+	function CharLimit(input, maxChar) {
+		var len = $(input).val().length;
+		$('#textCounter').text(maxChar - len + ' символов осталось');
+		if(len > maxChar) {
+			$(input).val($(input).val().substring(0, maxChar));
+			$('#textCounter').text(0 + ' символов осталось');
+		}
+	}
+	//text limit for text area
+	//Так как select по умолчанию = gif, то скрываем другие поля
+	$(document).ready(function() {
+		$('#id_media_img').hide();
+		$('#id_media_video').hide();
+		$('#id_media_link').hide();
+	});
 
-$("#id_filetype").change(function() {
-  if ($(this).val() == "gif") {
-    $('#id_media_gif').show();
-  } else {
-    $('#id_media_gif').hide();
-    $('#id_media_img').hide();
-    $('#id_media_video').hide();
-    $('#id_media_link').hide();
-  }
-  if ($(this).val() == "img") {
-    $('#id_media_img').show();
-  } else {
-    $('#id_media_img').hide();
-  }
-  if ($(this).val() == "video") {
-    $('#id_media_video').show();
-  } else {
-    $('#id_media_video').hide();
-  }
-  if ($(this).val() == "link") {
-    $('#id_media_link').show();
-  } else {
-    $('#id_media_link').hide();
-  }
-});
-</script>
-
-</form>
-{%endif%}
-{% endblock %}
+	//показываем и скрываем поля динамически в зависимости от значения в поле Select
+	$("#id_filetype").change(function() {
+		if($(this).val() == "gif") {
+			$('#id_media_gif').show();
+		} else {
+			$('#id_media_gif').hide();
+			$('#id_media_img').hide();
+			$('#id_media_video').hide();
+			$('#id_media_link').hide();
+		}
+		if($(this).val() == "img") {
+			$('#id_media_img').show();
+		} else {
+			$('#id_media_img').hide();
+		}
+		if($(this).val() == "video") {
+			$('#id_media_video').show();
+		} else {
+			$('#id_media_video').hide();
+		}
+		if($(this).val() == "link") {
+			$('#id_media_link').show();
+		} else {
+			$('#id_media_link').hide();
+		}
+	});
+	</script>
+</form> {%endif%} {% endblock %}
+</body>
 </html>

@@ -1,115 +1,43 @@
-/* Defaults */
-img, video {
-  max-width: 100%;
-  vertical-align: top;
+img,video{max-width:100%;vertical-align:top}
+.masonrygal{transition:all .2s ease-in-out;column-gap:20px;column-fill:initial}
+.masonrygal .brick{margin-bottom:30px;display:inline-block;vertical-align:top}
+.masonrygal .brick img{transition:all .1s ease-in-out;backface-visibility:hidden}
+.masonrygal .brick:hover img{opacity:.75}
+.masonrygal.bordered{column-rule:1px solid #eee;column-gap:10px;display:flex;}
+.masonrygal.bordered .brick{padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #eee;}
+.masonrygal.gutterless{column-gap:0;display:flex;}
+.masonrygal.gutterless .brick{margin-bottom:0}
+@media only screen and (min-width: 768px) {
+.masonrygal{column-count:6}
 }
-/* Masonry grid */
-.masonrygal {
-  transition: all .2s ease-in-out;
-  column-gap: 20px;
-  column-fill: initial;
-}
-
-/* Masonry item */
-.masonrygal .brick {
-  margin-bottom: 30px;
-  display: inline-block; /* Fix the misalignment of items */
-  vertical-align: top; /* Keep the item on the very top */
-}
-
-/* Masonry image effects */
-.masonrygal .brick img {
-  transition: all .1s ease-in-out;
-  backface-visibility: hidden; /* Remove Image flickering on hover */
+@media only screen and (orientation: album) and (min-width: 1024px) {
+.desc{font-size:1.25em}
+.intro{letter-spacing:1px}
+.masonrygal{column-count:6}
 }
 
-.masonrygal .brick:hover img {
-  opacity: .75;
+@media only screen and (min-width: 2000px) {
+.desc{font-size:1.25em}
+.intro{letter-spacing:1px}
+.masonrygal{column-count:10}
 }
-
-/* Bordered masonry */
-.masonrygal.bordered {
-  column-rule: 1px solid #eee;
-  column-gap: 20px;
-}
-
-.masonrygal.bordered .brick {
-  padding-bottom: 25px;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #eee;
-}
-
-/* Gutterless masonry */
-.masonrygal.gutterless {
-  column-gap: 0;
-}
-
-.masonrygal.gutterless .brick {
-  margin-bottom: 0;
-}
-
-/* Masonry on tablets */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-  .masonrygal {
-    column-count: 3;
-  }
-}
-
-/* Masonry on big screens */
-@media only screen and (min-width: 1024px) {
-  .desc {
-    font-size: 1.25em;
-  }
-
-  .intro {
-    letter-spacing: 1px;
-  }
-
-  .masonrygal {
-    column-count: 6;
-  }
-}
- /* Dropdown Button */
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
-.contaner-profile{
-padding-left:15px;
+.dropbtn{background-color:#4CAF50;color:#fff;padding:16px;font-size:16px;border:none}
+.dropdown{position:relative;display:inline-block}
+.dropdown-content{display:none;position:absolute;background-color:#f1f1f1;min-width:160px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);z-index:1}
+.dropdown-content a{color:#000;padding:12px 16px;text-decoration:none;display:block}
+.dropdown-content a:hover{background-color:#ddd}
+.dropdown:hover .dropdown-content{display:block}
+.dropdown:hover .dropbtn{background-color:#3e8e41}
+.contaner-profile{padding-left:15px}
+#id_title{width:400px;border-radius:4px;font-size:18pt;}
+#id_desc{width:400px;height:140px;border-radius:4px;font-size:18pt;}
+#id_filetype{border-radius:4px;}
+#id_medialink{width:400px;border-radius:4px}
+.form-box{background: linear-gradient(180deg, rgba(45,189,232,1) 0%, rgba(0,112,165,1) 35%);box-shadow: 0 0 10px rgba(0,0,0,0.5);padding: 10px;width:460px;box-sizing:inherit;opacity:0.9;}
+.control-label,
+#id_media_gif,
+#id_media_video,
+#id_media_gif
+{
+color:white;
 }
