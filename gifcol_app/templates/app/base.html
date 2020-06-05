@@ -33,7 +33,7 @@
               <button type="button" class="btn btn-success"><a style="color:white;" href="/new">Загрузить файл</a></button>
               <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      {{request.user.get_short_name}} [{{request.user.username}}]
+                     {%if user.userprofile.avatar%}<img width="30" height="30" src="{{user.userprofile.avatar.url}}">{%endif%} {{request.user.get_short_name}} [{{request.user.username}}]
                   </button>
                   <div class="dropdown-menu" style="min-width: 8rem;" aria-labelledby="btnGroupDrop1">
                       <a class="dropdown-item" href="{% url 'get_user_profile' username=request.user %}">Профиль</a>
