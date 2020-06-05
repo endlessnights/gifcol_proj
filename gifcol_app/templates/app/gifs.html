@@ -43,10 +43,10 @@
               <a href="{% url 'bookmark_post' pk=mediamodel.pk %}">Добавить в избранное<i class="far fa-star"></i>
               </a>
               {%endif%}
-              <br>
-         {%if mediamodel.title%}Название: {{mediamodel.title}}{%endif%}
-              <br>{%if mediamodel.desc%}Описание: {{mediamodel.desc}}}{%endif%}
-              <br>Автор: {{mediamodel.author}}
+              {%if mediamodel.title%}<br>
+         Название: {{mediamodel.title}}{%endif%}
+              {%if mediamodel.desc%}<br>Описание: {{mediamodel.desc}}}{%endif%}
+              <br>Загрузил: {%if user.userprofile.avatar%}<img width="20" height="20" src="{{user.userprofile.avatar.url}}">{%endif%}<a href="user/{{mediamodel.author}}">{{mediamodel.author}}</a>
               <br>Дата загрузки: {{mediamodel.created_date}}
           </div>
       </div>
