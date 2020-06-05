@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
-from .models import mediamodel
+from .models import mediamodel, UserProfile
+
 
 class MediaAddForm(forms.ModelForm):
     class Meta:
@@ -16,6 +17,7 @@ class MediaAddForm(forms.ModelForm):
             'filetype',
         )
 
+
 class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
@@ -23,5 +25,23 @@ class EditProfileForm(UserChangeForm):
             'email',
             'first_name',
             'last_name',
-            'password'
+            'password',
         )
+
+
+class UpdateProfileForm(UserChangeForm):
+    class Meta:
+        model = UserProfile
+        fields = (
+            'userdesc',
+            'userwebsite',
+            'avatar',
+            'cover',
+        )
+
+    def save(self, user=None):
+        user_profile = super(UpdateProfileForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile

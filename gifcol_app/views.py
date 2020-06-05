@@ -1,22 +1,23 @@
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth import (
     authenticate, login as built_in_login, logout as built_in_logout)
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import MediaAddForm, EditProfileForm
-
+from .forms import MediaAddForm, EditProfileForm, UpdateProfileForm
+from django.views.generic import UpdateView
 # Create your views here.
 from django.views.decorators.http import require_POST
 
-from .models import mediamodel
+from .models import mediamodel, UserProfile
 
 
 # Страница с Гифками
 def gifpage(request):
     gifposts = mediamodel.objects.filter(filetype='gif', created_date__lte=timezone.now()).order_by(
-        'created_date').reverse()
+        '-created_date')
     return render(request, 'app/gifs.html',
                   {
                       'gifposts': gifposts
@@ -27,7 +28,7 @@ def gifpage(request):
 # Нужно еще добавить в фильтр filetype='link' - ссылка на видео и генерить youtube Iframe`ы
 def videopage(request):
     videoposts = mediamodel.objects.filter(filetype='video', created_date__lte=timezone.now()).order_by(
-        'created_date').reverse()
+        '-created_date')
     return render(request, 'app/videos.html',
                   {
                       'videoposts': videoposts
@@ -52,13 +53,15 @@ def get_user_profile(request, username):
     gifs_added_by_user = mediamodel.objects.filter(author=userprofile,
                                                    filetype='gif')  # список картинок, добавленных пользователем
     videos_added_by_user = mediamodel.objects.filter(author=userprofile,
-                                                   filetype='video')  # список картинок, добавленных пользователем
+                                                     filetype='video')  # список картинок, добавленных пользователем
     return render(request, 'app/user_profile.html', {
         "user": userprofile,
         "imgs_added_by_user": imgs_added_by_user,
         "gifs_added_by_user": gifs_added_by_user,
         "videos_added_by_user": videos_added_by_user,
     })
+
+
 # Настройки профиля
 def edit_profile(request):
     if request.method == "POST":
@@ -72,6 +75,20 @@ def edit_profile(request):
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
         return render(request, 'app/edit_profile.html', args)
+
+
+class EditUserProfileView(UpdateView):
+    model = UserProfile
+    form_class = UpdateProfileForm
+    template_name = "app/update_profile.html"
+
+    def get_object(self, *args, **kwargs):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return user.userprofile
+
+    def get_success_url(self, *args, **kwargs):
+        user = get_object_or_404(User, username=self.kwargs['username'])
+        return reverse('get_user_profile', args=(user,))
 
 # Login form Auth
 @require_POST
@@ -108,3 +125,15 @@ def new_mediafile(request):
         form = MediaAddForm()
     return render(request, 'app/edit.html',
                   {'form': form})
+
+
+def bookmark_post(request, pk):
+    is_bookmarked = False
+    post = get_object_or_404(mediamodel, pk=pk)
+    if post.bookmark.filter(pk=request.user.id).exists():
+        post.bookmark.remove(request.user)
+        is_bookmarked = False
+    else:
+        post.bookmark.add(request.user)
+        is_bookmarked = True
+    return HttpResponse(status=204)
