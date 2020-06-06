@@ -1,9 +1,9 @@
 {% extends 'gifcol_app/base.html' %}
 
 {% block content %}
-
+<title>Гифки | Meme Archive</title>
     <div class="masonrygal bordered">
-        {% for meme in memes %}
+        {% for meme in gifmemes %}
             <div class="brick">
                 <div class="hvrbox">
                     <img src="{{meme.file.url}}">
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
 
-    {% for meme in memes %}
+    {% for meme in gifmemes %}
         <!-- The Modal -->
         <div id="myModal{{ forloop.counter }}" class="modal">
             <!-- Modal content -->
@@ -54,20 +54,23 @@
                             <img width="20" height="20" src="{{user.userprofile.avatar.url}}">
                         {%endif%}
 
-                        <a href="user/{{meme.author}}">
+                        <a href="/user/{{meme.author}}">
                             {{meme.author}}
                         </a>
                         <br>
                         Дата загрузки: {{meme.created_at}}
-                        <div class="row mb-3">
-                            {% for tag in meme.tags.published %}
-                                <a href="">
-                                    <span class="mr-3">
-                                        {{ tag }}
-                                    </span>
-                                </a>
-                            {% endfor %}
-                        </div>
+                        <br>
+                            {%if meme.tags %}
+                            Теги:
+                                {% for tag in meme.tags.published %}
+                                    <a href="">
+                                        <span>
+                                            {{ tag }}
+                                        </span>
+                                    </a>,
+                                {% endfor %}
+                            {%endif%}
+
                     </div>
                 </div>
             </div>
@@ -76,7 +79,7 @@
     <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
 
     <script>
-        {% for meme in memes %}
+        {% for meme in gifmemes %}
             // Get the modal
             var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
 

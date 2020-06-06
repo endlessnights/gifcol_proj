@@ -9,5 +9,6 @@ class MediaAddForm(forms.ModelForm):
             'title',
             'description',
             'file',
+            'filetype',
             'medialink',
         )

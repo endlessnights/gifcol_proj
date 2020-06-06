@@ -1,20 +1,30 @@
+from django.views import View
 from django.http import HttpResponse
 from django.utils import timezone
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import MediaAddForm
+from django.contrib.auth import logout as built_in_logout
+from .models import Meme, Tag
 
-from .models import Meme
+
+# Logout form DeAuth
+def logout(request):
+    built_in_logout(request)
+    return redirect('/')
 
 
 # Страница с Гифками
 def gifpage(request):
+    tag_title = Tag.title
     gifmemes = Meme.objects.published().filter(
         filetype='gif',
     ).order_by(
         '-created_at'
     )
-    return render(request, 'gifcol_app/gifs.html', {'memes': gifmemes})
+    return render(request, 'gifcol_app/gifs.html', {'gifmemes': gifmemes,
+                                                    'tag_title': tag_title
+                                                    })
 
 
 # Страница с видео
@@ -63,3 +73,11 @@ def bookmark_post(request, pk):
         post.bookmark.add(request.user)
         is_bookmarked = True
     return HttpResponse(status=204)
+
+
+class tagged_files(View):
+    def get(self, request, tag_title):
+        tag_files = Meme.objects.filter(tags=tag_title)
+        return render(request, 'gifcol_app/tag.html', {
+            'tag_files': tag_files}
+                      )

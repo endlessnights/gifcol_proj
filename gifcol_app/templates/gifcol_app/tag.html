@@ -1,8 +1,9 @@
 {% extends 'gifcol_app/base.html' %}
+
 {% block content %}
-<title>Картинки | Meme Archive</title>
+
     <div class="masonrygal bordered">
-        {% for meme in imgposts %}
+        {% for meme in memes %}
             <div class="brick">
                 <div class="hvrbox">
                     <img src="{{meme.file.url}}">
@@ -19,7 +20,7 @@
         {% endfor %}
     </div>
 
-    {% for meme in imgposts %}
+    {% for meme in memes %}
         <!-- The Modal -->
         <div id="myModal{{ forloop.counter }}" class="modal">
             <!-- Modal content -->
@@ -29,34 +30,40 @@
                 </span>
                 <div class="row" align="left">
                     <div class="col-sm-8">
-                        <img width="100%" height="100%" src="{{ meme.file.url }}">
+                        <img width="100%" height="100%" src="{{meme.file.url}}">
                     </div>
                     <div class="col-sm-4">
-                        <a href="#">
-                            Добавить в избранное <i class="fas fa-star"></i>
-                        </a>
-                        {%if Meme.title%}
-                            <br>
-                            Название: {{ meme.title }}
+                        {% if is_bookmarked %}
+                            <a href="{% url 'bookmark_post' pk=post.pk %}">В избранном
+                                <i class="fas fa-star"></i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'bookmark_post' pk=meme.pk %}">
+                                Добавить в избранное<i class="far fa-star"></i>
+                            </a>
                         {%endif%}
+                        {%if meme.title%}<br>
+                            Название: {{meme.title}}{%endif%}
                         {%if meme.description %}
-                            <br>
-                            Описание: {{ meme.description }}
-
+                            <br>Описание: {{meme.description }}}
                         {%endif%}
                         <br>
                         Загрузил:
-                        {%if user.avatar%}
-                            <img width="20" height="20" src="{{user.avatar.url}}">
+
+                        {%if user.userprofile.avatar%}
+                            <img width="20" height="20" src="{{user.userprofile.avatar.url}}">
                         {%endif%}
-                        <a href="/user/{{meme.author}}">{{meme.author}}</a>
+
+                        <a href="user/{{meme.author}}">
+                            {{meme.author}}
+                        </a>
                         <br>
                         Дата загрузки: {{meme.created_at}}
                         <div class="row mb-3">
                             {%if meme.tags %}
                                 {% for tag in meme.tags.published %}
                                     <a href="">
-                                        <span style="border-color:red; border:1px solid; border-radius:5px; padding:5px;" class="mr-3">
+                                        <span class="mr-3">
                                             {{ tag }}
                                         </span>
                                     </a>
@@ -71,7 +78,7 @@
     <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
 
     <script>
-        {% for meme in imgposts %}
+        {% for meme in memes %}
             // Get the modal
             var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
 
