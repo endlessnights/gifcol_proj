@@ -13,7 +13,17 @@ class Account(AbstractUser, TimeStamped):
         blank=True,
     )
     website = models.URLField(
-        verbose_name='Мой вебсайт',
+        verbose_name='Мой веб-сайт',
+        null=True,
+        blank=True,
+    )
+    vksite = models.URLField(
+        verbose_name='Я ВКонтакте',
+        null=True,
+        blank=True,
+    )
+    fbsite = models.URLField(
+        verbose_name='я на Facebook',
         null=True,
         blank=True,
     )

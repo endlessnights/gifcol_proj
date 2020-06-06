@@ -2,41 +2,52 @@
 {% load crispy_forms_tags %}
 {% block content %}
     {% if user.is_authenticated %}
-        <div class="panel panel-primary" style="width:40%; margin:15px;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Профиль пользователя</h3>
-            </div>
-            <div class="panel-body">
-                <a onClick="javascript:history.go(-1);">Вернуться</a>
+<div style="padding-left:10%;">
+                <h3>Профиль пользователя <br>{{user.get_full_name}}</h3>
+                <a onClick="javascript:history.go(-1);"><i><u> << Вернуться</u></i></a>
                 <br/>
                 <br/>
                 <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+                    <hr>
                     <div class="row">
-                        <div class="col-md-6" style="margin-right:30px;">
-                            {{ form.description|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form.website|as_crispy_field }}
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             {{ form.avatar|as_crispy_field }}
                         </div>
+
+                    {%if user.avatar%}
+                        <div class="col-md-4" align="center">
+                            <img src="{{user.avatar.url}}" style="width:35%;border-radius:50%;">
+                        </div>
+                    {%endif%}
                     </div>
-                    <br>
+                    <hr>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             {{ form.cover|as_crispy_field }}
                         </div>
+                        {%if user.cover%}
+                        <div class="col-md-4" align="center">
+                            <img src="{{user.cover.url}}" style="width:55%;border-radius:5%;">
+                        </div>
+                        {%endif%}
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    <hr>
+                    <h4>Информация обо мне</h4>
+                    <div class="row" style="padding-left:15px;">
+                        <div style="margin-right:30px;">
+                            {{ form.description|as_crispy_field }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ form.website|as_crispy_field }}
+                            <br>
+                            {{ form.vksite|as_crispy_field }}
+                            <br>
+                            {{ form.fbsite|as_crispy_field }}
+                        </div>
+                     </div>
+                    <br/>
+                    <button type="submit" class="btn btn-primary" style="margin-bottom:25px;">Сохранить изменения</button>
                 </form>
-
-            </div>
-            <br>
-        </div>
+</div>
     {% endif %}
 {% endblock %}

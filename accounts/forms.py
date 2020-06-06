@@ -20,6 +20,8 @@ class UpdateProfileForm(UserChangeForm):
         fields = (
             'description',
             'website',
+            'vksite',
+            'fbsite',
             'avatar',
             'cover',
         )
