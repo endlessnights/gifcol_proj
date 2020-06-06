@@ -1,20 +1,18 @@
 from django.contrib import admin
-from .models import mediamodel, UserProfile
-
-
-# Register your models here.
-
-@admin.register(mediamodel)
-class PublishAdmin(admin.ModelAdmin):
-    list_display = ['author','title','desc','filetype','created_date']
-
+from .models import Meme, Tag
 
 admin.site.site_header = 'Gif Collection admin page'
 
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'userdesc', 'userwebsite', 'avatar', 'cover']
 
-   # def user_info(self, obj):
-   #     return obj.userdesc
+@admin.register(Meme)
+class MemeAdmin(admin.ModelAdmin):
+    list_display = ('author', 'title', 'published', 'created_at')
+    autocomplete_fields = ('tags', )
+    readonly_fields = ('created_at', 'updated_at')
 
-admin.site.register(UserProfile, UserProfileAdmin)
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('title',  'created_at')
+    search_fields = ('title', )
+    readonly_fields = ('created_at', 'updated_at')

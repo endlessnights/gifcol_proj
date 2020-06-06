@@ -1,0 +1,131 @@
+{% extends 'gifcol_app/base.html' %}
+            {% load static %}
+
+{% block title %}
+    <title>
+        Профиль {{user.get_full_name}} | FunGif
+    </title>
+{% endblock %}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <style>
+            .parallax {
+                /* The image used */
+                {%if user.userprofile.cover%}
+                    background-image: url("{{user.userprofile.cover.url}}");
+                {%else%}
+                    background-image: url("{% static '/img/user-cover-default.png' %}");
+                {%endif%}
+                /* Set a specific height */
+                height: 200px;
+
+                /* Create the parallax scrolling effect */
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .overlay-image {
+                position: relative;
+            }
+            /* Original image */
+
+            .overlay-image img {
+                position: absolute;
+                left: 2%;
+                width: 12%;
+                display: block;
+                border-radius:50%;
+            }
+            .trick {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        </style>
+
+        <div class="parallax" class=" image _b2 ">
+            {%if user.userprofile.avatar%}
+                <div class="trick"></div>
+                <div class=" overlay-image _b1 ">
+                    <div class=" text _2 ">
+                        <img src="{{user.userprofile.avatar.url}}">
+                    </div>
+                </div>
+            {%endif%}
+        </div>
+        <br>
+        <div class="container">
+            <div class="row" align="center">
+                <div class="col">
+                    <h3>Профиль пользователя {{ user.username }}</h3>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    Дата регистрации: {{user.date_joined}}
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    Полное имя: {{user.get_full_name}}
+                </div>
+                {% if request.user == user %}
+                    <div class="w-100"></div>
+                    <div class="col">E-mail: {{user.email}}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr>
+        <ul class="nav nav-pills mb-3" id="myTab" role="tablist" style="justify-content: center;">
+            <li class="nav-item">
+                <a class="nav-link active" id="user_upl_imgs_tab" data-toggle="tab" href="#user_upl_imgs" role="tab" aria-controls="home" aria-selected="true">Загруженные файлы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="user_favs_tab" data-toggle="tab" href="#user_favs" role="tab" aria-controls="contact3" aria-selected="false">Избранное пользователя</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="user_info_tab" data-toggle="tab" href="#user_info" role="tab" aria-controls="contact3" aria-selected="false">О пользователе</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="user_upl_imgs" role="tabpanel" aria-labelledby="user_upl_imgs_tab">
+                <div id="gallery-content-center" style="position: relative; overflow: hidden; height: 1200px;" class="gallery-content-center-full isotope">
+                    {% for mediamodel in imgs_added_by_user %}
+                        <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.description }}">
+                            <img class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                        </a>
+                    {% endfor %}
+                    {% for mediamodel in gifs_added_by_user %}
+                        <a class="example-image-link" href="{{mediamodel.media_gif.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.description }}">
+                            <img class="example-image" src="{{mediamodel.media_gif.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="tab-pane fade" id="user_favs" role="tabpanel" aria-labelledby="user_favs_tab">
+                <!--<h4 align="center" style="color:grey;margin-top:10%;">Пусто</h4>-->
+
+                {%for mediamodel in bookmarked_posts%}
+                    <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.desc}}">
+                        <img style="padding-bottom:20px;vertical-align:top;" width="200" class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                    </a>
+                {%endfor%}
+            </div>
+            <div class="tab-pane fade" id="user_info" role="tabpanel" aria-labelledby="user_info_tab">
+                <div class="w-100"></div>
+                <div class="col-sm-6">
+                    Обо мне:<br>
+                    <p align="justify">{{user.userprofile.description}}</p>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    Мой веб-сайт: <a href="{{user.userprofile.website}}" target="_blank">
+                    {{user.userprofile.website}}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

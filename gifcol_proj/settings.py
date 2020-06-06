@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gifcol_app',
+    'accounts',
     'crispy_forms',
 ]
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
@@ -90,7 +93,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
