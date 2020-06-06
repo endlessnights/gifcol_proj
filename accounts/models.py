@@ -31,7 +31,9 @@ class Account(AbstractUser, TimeStamped):
     bookmarks = models.ManyToManyField(
         Meme,
         verbose_name='Избранное',
-        related_name='users_bookmarked'
+        related_name='users_bookmarked',
+        blank=True,
+        null=True,
     )
 
     class Meta:

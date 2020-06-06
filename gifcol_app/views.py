@@ -10,11 +10,10 @@ from .models import Meme
 # Страница с Гифками
 def gifpage(request):
     gifmemes = Meme.objects.published().filter(
-        filetype='img',
+        filetype='gif',
     ).order_by(
         '-created_at'
     )
-    print(gifmemes)
     return render(request, 'gifcol_app/gifs.html', {'memes': gifmemes})
 
 

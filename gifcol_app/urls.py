@@ -6,7 +6,7 @@ from .views import gifpage, new_mediafile, videopage, imgpage, bookmark_post
 
 urlpatterns = [
     path('', gifpage, name='gifpage'),
-    path(r'accounts', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path(r'user/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('new/', new_mediafile, name='new_mediafile'),
     path('video/', videopage, name='videopage'),
     path('img/', imgpage, name='imgpage'),

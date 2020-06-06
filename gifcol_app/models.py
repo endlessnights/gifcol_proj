@@ -9,6 +9,7 @@ class Tag(TimeStamped, PublishedModel):
     title = models.CharField(
         verbose_name='Название',
         max_length=32,
+        unique=True,
     )
 
     def __str__(self):

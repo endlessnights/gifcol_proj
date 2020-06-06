@@ -10,7 +10,7 @@
             <br>
             <div class="form-box row">
                 <div class="col">
-                    {{ form.filetype|as_crispy_field }}
+
                 </div>
                 <div class="w-100" style="padding-bottom:0.5em;"></div>
                 <div class="col">
@@ -26,15 +26,15 @@
                 </div>
                 <div class="w-100"></div>
                 <div class="col" id="id_media_img">
-                    {{ form.media_img|as_crispy_field }}
+                    {{ form.file|as_crispy_field }}
                 </div>
                 <div class="w-100"></div>
                 <div class="col" id="id_media_gif">
-                    {{ form.media_gif|as_crispy_field }}
+
                 </div>
                 <div class="w-100"></div>
                 <div class="col" id="id_media_video">
-                    {{ form.media_video|as_crispy_field }}
+
                 </div>
                 <div class="w-100"></div>
                 <div class="col" id="id_media_link">
@@ -65,7 +65,7 @@
             //text limit for text area
             //Так как select по умолчанию = gif, то скрываем другие поля
             $(document).ready(function() {
-                $('#id_media_img').hide();
+                $('#id_media_img_temp').hide();
                 $('#id_media_video').hide();
                 $('#id_media_link').hide();
             });
@@ -76,14 +76,14 @@
                     $('#id_media_gif').show();
                 } else {
                     $('#id_media_gif').hide();
-                    $('#id_media_img').hide();
+                    $('#id_media_img_temp').hide();
                     $('#id_media_video').hide();
                     $('#id_media_link').hide();
                 }
                 if($(this).val() == "img") {
-                    $('#id_media_img').show();
+                    $('#id_media_img_temp').show();
                 } else {
-                    $('#id_media_img').hide();
+                    $('#id_media_img_temp').hide();
                 }
                 if($(this).val() == "video") {
                     $('#id_media_video').show();

@@ -2,10 +2,10 @@
 {% block content %}
 
     <div class="masonrygal bordered">
-        {% for mediamodel in imgposts %}
+        {% for meme in imgposts %}
             <div class="brick">
                 <div class="hvrbox">
-                    <img src="{{mediamodel.media_img.url}}">
+                    <img src="{{meme.file.url}}">
                     <div class="hvrbox-layer_top">
                         <div style="float:right;" id="myBtn{{ forloop.counter }}" class="hvrbox-zoom">
                             <i style="font-size:24pt;" class="fas fa-search"></i>
@@ -19,7 +19,7 @@
         {% endfor %}
     </div>
 
-    {% for mediamodel in imgposts %}
+    {% for meme in imgposts %}
         <!-- The Modal -->
         <div id="myModal{{ forloop.counter }}" class="modal">
             <!-- Modal content -->
@@ -29,19 +29,19 @@
                 </span>
                 <div class="row" align="left">
                     <div class="col-sm-8">
-                        <img width="100%" height="100%" src="{{ mediamodel.media_img.url }}">
+                        <img width="100%" height="100%" src="{{ meme.file.url }}">
                     </div>
                     <div class="col-sm-4">
                         <a href="#">
                             Добавить в избранное <i class="fas fa-star"></i>
                         </a>
-                        {%if mediamodel.title%}
+                        {%if Meme.title%}
                             <br>
-                            Название: {{ mediamodel.title }}
+                            Название: {{ meme.title }}
                         {%endif%}
-                        {%if mediamodel.description %}
+                        {%if meme.description %}
                             <br>
-                            Описание: {{ mediamodel.description }}
+                            Описание: {{ meme.description }}
 
                         {%endif%}
                         <br>
@@ -51,7 +51,7 @@
                         {%endif%}
                         <a href="user/{{mediamodel.author}}">{{mediamodel.author}}</a>
                         <br>
-                        Дата загрузки: {{mediamodel.created_at}}
+                        Дата загрузки: {{Meme.created_at}}
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
     <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
 
     <script>
-        {% for mediamodel in imgposts %}
+        {% for meme in imgposts %}
             // Get the modal
             var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
 

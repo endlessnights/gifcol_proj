@@ -13,8 +13,8 @@
         <style>
             .parallax {
                 /* The image used */
-                {%if user.userprofile.cover%}
-                    background-image: url("{{user.userprofile.cover.url}}");
+                {%if user.cover%}
+                    background-image: url("{{user.cover.url}}");
                 {%else%}
                     background-image: url("{% static '/img/user-cover-default.png' %}");
                 {%endif%}
@@ -47,11 +47,11 @@
         </style>
 
         <div class="parallax" class=" image _b2 ">
-            {%if user.userprofile.avatar%}
+            {%if user.avatar%}
                 <div class="trick"></div>
                 <div class=" overlay-image _b1 ">
                     <div class=" text _2 ">
-                        <img src="{{user.userprofile.avatar.url}}">
+                        <img src="{{user.avatar.url}}">
                     </div>
                 </div>
             {%endif%}
@@ -93,14 +93,14 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="user_upl_imgs" role="tabpanel" aria-labelledby="user_upl_imgs_tab">
                 <div id="gallery-content-center" style="position: relative; overflow: hidden; height: 1200px;" class="gallery-content-center-full isotope">
-                    {% for mediamodel in imgs_added_by_user %}
-                        <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.description }}">
-                            <img class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                    {% for meme in imgs_added_by_user %}
+                        <a class="example-image-link" href="{{meme.file.url}}" data-lightbox="example-set" data-title="{{meme.title}}<br>{{meme.description }}">
+                            <img class="example-image" src="{{meme.file.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
                         </a>
                     {% endfor %}
-                    {% for mediamodel in gifs_added_by_user %}
-                        <a class="example-image-link" href="{{mediamodel.media_gif.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.description }}">
-                            <img class="example-image" src="{{mediamodel.media_gif.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                    {% for meme in gifs_added_by_user %}
+                        <a class="example-image-link" href="{{meme.file.url}}" data-lightbox="example-set" data-title="{{meme.title}}<br>{{meme.description }}">
+                            <img class="example-image" src="{{meme.file.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
                         </a>
                     {% endfor %}
                 </div>
@@ -108,9 +108,9 @@
             <div class="tab-pane fade" id="user_favs" role="tabpanel" aria-labelledby="user_favs_tab">
                 <!--<h4 align="center" style="color:grey;margin-top:10%;">Пусто</h4>-->
 
-                {%for mediamodel in bookmarked_posts%}
-                    <a class="example-image-link" href="{{mediamodel.media_img.url}}" data-lightbox="example-set" data-title="{{mediamodel.title}}<br>{{mediamodel.desc}}">
-                        <img style="padding-bottom:20px;vertical-align:top;" width="200" class="example-image" src="{{mediamodel.media_img.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
+                {%for meme in bookmarked_posts%}
+                    <a class="example-image-link" href="{{meme.file.url}}" data-lightbox="example-set" data-title="{{meme.title}}<br>{{meme.desc}}">
+                        <img style="padding-bottom:20px;vertical-align:top;" width="200" class="example-image" src="{{meme.file.url}}" class="all landscape isotope-item"  style="position: absolute; left: 0px; top: 0px; transform: translate3d(620px, 420px, 0px) scale3d(1, 1, 1); opacity: 1;" alt=""/>
                     </a>
                 {%endfor%}
             </div>
@@ -118,12 +118,12 @@
                 <div class="w-100"></div>
                 <div class="col-sm-6">
                     Обо мне:<br>
-                    <p align="justify">{{user.userprofile.description}}</p>
+                    <p align="justify">{{user.description}}</p>
                 </div>
                 <div class="w-100"></div>
                 <div class="col">
-                    Мой веб-сайт: <a href="{{user.userprofile.website}}" target="_blank">
-                    {{user.userprofile.website}}</a>
+                    Мой веб-сайт: <a href="{{user.website}}" target="_blank">
+                    {{user.website}}</a>
                 </div>
             </div>
         </div>

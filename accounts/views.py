@@ -36,7 +36,10 @@ def logout(request):
     return redirect('/')
 
 
-def get_user_profile(request):
+def get_user_profile(request, username):
+    #получаеми ия пользователя из url
+    userprofile = Account.objects.get(username=username)
+    #список гифок, добавленных пользователем
     imgs_added_by_user = Meme.objects.filter(
         author=request.user,
         filetype='img'
@@ -49,7 +52,8 @@ def get_user_profile(request):
         author=request.user,
         filetype='video'
     )  # список картинок, добавленных пользователем
-    return render(request, 'gifcol_app/user_profile.html', {
+    return render(request, 'accounts/user_profile.html', {
+        "user": userprofile,
         "imgs_added_by_user": imgs_added_by_user,
         "gifs_added_by_user": gifs_added_by_user,
         "videos_added_by_user": videos_added_by_user,
@@ -64,21 +68,21 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-            return render(request, 'gifcol_app/user_profile.html', {"user": current_user})
+            return render(request, 'accounts/user_profile.html', {"user": current_user})
     else:
         form = EditProfileForm(instance=request.user)
         args = {'form': form}
-        return render(request, 'gifcol_app/edit_profile.html', args)
+        return render(request, 'accounts/edit_profile.html', args)
 
 
 class EditUserProfileView(UpdateView):
     model = Account
     form_class = UpdateProfileForm
-    template_name = "gifcol_app/update_profile.html"
+    template_name = "accounts/update_profile.html"
 
     def get_object(self, *args, **kwargs):
         user = get_object_or_404(Account, username=self.kwargs['username'])
-        return user.userprofile
+        return user
 
     def get_success_url(self, *args, **kwargs):
         user = get_object_or_404(Account, username=self.kwargs['username'])
