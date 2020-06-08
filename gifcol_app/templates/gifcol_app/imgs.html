@@ -55,7 +55,7 @@
                         <div class="row mb-3">
                             {%if meme.tags %}
                                 {% for tag in meme.tags.published %}
-                                    <a href="">
+                                    <a href="{% url 'tag_link' tag_link=Tag.title %}">
                                         <span style="border-color:red; border:1px solid; border-radius:5px; padding:5px;" class="mr-3">
                                             {{ tag }}
                                         </span>

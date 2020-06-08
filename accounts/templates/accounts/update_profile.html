@@ -2,8 +2,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
     {% if user.is_authenticated %}
-<div style="padding-left:10%;">
-                <h3>Профиль пользователя <br>{{user.get_full_name}}</h3>
+        <div style="padding-left:10%;">
+            <h3>Профиль пользователя <br>{{user.get_full_name}}</h3>
                 <a onClick="javascript:history.go(-1);"><i><u> << Вернуться</u></i></a>
                 <br/>
                 <br/>
@@ -48,6 +48,6 @@
                     <br/>
                     <button type="submit" class="btn btn-primary" style="margin-bottom:25px;">Сохранить изменения</button>
                 </form>
-</div>
+        </div>
     {% endif %}
 {% endblock %}

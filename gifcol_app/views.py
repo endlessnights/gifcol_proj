@@ -16,15 +16,18 @@ def logout(request):
 
 # Страница с Гифками
 def gifpage(request):
-    tag_title = Tag.title
+    tag_link = Tag.title
     gifmemes = Meme.objects.published().filter(
         filetype='gif',
     ).order_by(
         '-created_at'
     )
-    return render(request, 'gifcol_app/gifs.html', {'gifmemes': gifmemes,
-                                                    'tag_title': tag_title
-                                                    })
+    return render(
+        request,
+        'gifcol_app/gifs.html', {'gifmemes': gifmemes,
+                                 'tag_link': tag_link
+                                 }
+    )
 
 
 # Страница с видео
@@ -75,9 +78,9 @@ def bookmark_post(request, pk):
     return HttpResponse(status=204)
 
 
-class tagged_files(View):
-    def get(self, request, tag_title):
-        tag_files = Meme.objects.filter(tags=tag_title)
-        return render(request, 'gifcol_app/tag.html', {
-            'tag_files': tag_files}
-                      )
+class tag_link(View):
+    def get(self, request, tag_link):
+        tag_objects = Tag.objects.filter(title=tag_link)
+        return render(
+            request, 'gifcol_app/tag.html', {'tag_objects': tag_objects}
+        )
