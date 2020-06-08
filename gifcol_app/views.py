@@ -19,7 +19,7 @@ def logout(request):
 # Страница с Гифками
 def gifpage(request):
     is_bookmarked = False
-    gifmemes = Meme.objects.published().filter(
+    gifmemes = Meme.objects.filter(
         filetype='gif',
     ).order_by(
         '-created_at'

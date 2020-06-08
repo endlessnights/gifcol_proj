@@ -74,6 +74,18 @@
                     <div class="w-100"></div>
                     <div class="col">E-mail: {{user.email}}</div>
                 {% endif %}
+                <div class="w-100"></div>
+                <div class="col">
+                    {%if user.website%}
+                        <a href="{{user.website}}" target="_blank"><i class="fas fa-link" style="font-size:16pt;margin-right:5px;"></i></a>
+                    {%endif%}
+                    {%if user.vksite%}
+                        <a href="{{user.vksite}}" target="_blank"><i class="fab fa-vk" style="font-size:16pt;margin-right:5px;"></i></a>
+                    {%endif%}
+                    {%if user.fbsite%}
+                        <a href="{{user.fbsite}}" target="_blank"><i class="fab fa-facebook" style="font-size:16pt;"></i></a>
+                    {%endif%}
+                </div>
             </div>
         </div>
 
@@ -121,19 +133,19 @@
                     <p align="justify">{{user.description}}</p>
                 </div>
                 <div class="w-100"></div>
-                <div class="col">
+                <div class="col">{%if user.website%}
                     Мой веб-сайт: <a href="{{user.website}}" target="_blank">
-                    {{user.website}}</a>
+                    {{user.website}}</a>{%endif%}
                 </div>
                 <div class="w-100"></div>
-                <div class="col">
+                <div class="col">{%if user.vksite%}
                     Я Вконтакте: <a href="{{user.vksite}}" target="_blank">
-                    {{user.website}}</a>
+                    {{user.vksite}}</a>{%endif%}
                 </div>
                 <div class="w-100"></div>
-                <div class="col">
+                <div class="col">{%if user.fbsite%}
                     Я на Facebook: <a href="{{user.fbsite}}" target="_blank">
-                    {{user.website}}</a>
+                    {{user.fbsite}}</a>{%endif%}
                 </div>
             </div>
         </div>
