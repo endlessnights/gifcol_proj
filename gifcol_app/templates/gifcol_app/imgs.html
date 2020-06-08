@@ -32,7 +32,7 @@
                         <img width="100%" height="100%" src="{{ meme.file.url }}">
                     </div>
                     <div class="col-sm-4">
-                        <a href="#">
+                        <a href="{% url 'bookmark_post' id=meme.id%}">
                             Добавить в избранное <i class="fas fa-star"></i>
                         </a>
                         {%if Meme.title%}
@@ -52,14 +52,13 @@
                         <a href="/user/{{meme.author}}">{{meme.author}}</a>
                         <br>
                         Дата загрузки: {{meme.created_at}}
-                        <div class="row mb-3">
+                        <br>
                             {%if meme.tags %}
+                                Теги:
                                 {% for tag in meme.tags.published %}
-                                    <a href="{% url 'tag_link' tag_link=Tag.title %}">
-                                        <span style="border-color:red; border:1px solid; border-radius:5px; padding:5px;" class="mr-3">
+                                        <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
                                             {{ tag }}
-                                        </span>
-                                    </a>
+                                        </a>
                                 {% endfor %}
                             {%endif%}
                         </div>

@@ -63,11 +63,9 @@
                             {%if meme.tags %}
                             Теги:
                                 {% for tag in meme.tags.published %}
-                                    <a href="">
-                                        <span>
+                                        <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
                                             {{ tag }}
-                                        </span>
-                                    </a>,
+                                        </a>
                                 {% endfor %}
                             {%endif%}
 

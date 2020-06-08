@@ -53,11 +53,9 @@
                         <div class="row mb-3">
                             {%if meme.tags %}
                                 {% for tag in meme.tags.published %}
-                                    <a href="">
-                                        <span class="mr-3">
+                                        <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
                                             {{ tag }}
-                                        </span>
-                                    </a>
+                                        </a>
                                 {% endfor %}
                             {%endif%}
                         </div>
