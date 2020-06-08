@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import url
 
-from .views import gifpage, new_mediafile, videopage, imgpage, bookmark_post, logout, tag_link
+from .views import gifpage, new_mediafile, videopage, imgpage, logout, tag_link, bookmark_post
 
 urlpatterns = [
     path('', gifpage, name='gifpage'),

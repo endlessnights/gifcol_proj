@@ -18,8 +18,7 @@ def logout(request):
 
 # Страница с Гифками
 def gifpage(request):
-    #tag_link = Tag.title
-    tag_link = Meme.tags
+    is_bookmarked = False
     gifmemes = Meme.objects.published().filter(
         filetype='gif',
     ).order_by(
@@ -36,28 +35,26 @@ def gifpage(request):
 # Страница с видео
 # Нужно еще добавить в фильтр filetype='link' - ссылка на видео и генерить youtube Iframe`ы
 def videopage(request):
-    #tag_link = Tag.title
-    tag_link = Meme.tags
+    is_bookmarked = False
     videoposts = Meme.objects.filter(
         filetype='video',
     ).order_by(
         '-created_at'
     )
     return render(request, 'gifcol_app/videos.html', {'videoposts': videoposts,
-                                                      'tag_link': tag_link,})
+                                                      'tag_link': tag_link, })
 
 
 # Страница с картинками
 def imgpage(request):
-    #tag_link = Tag.title
-    #tag_link = Meme.tags
+    #is_bookmarked = False
     imgposts = Meme.objects.filter(
         filetype='img',
     ).order_by(
         '-created_at'
     )
     return render(request, 'gifcol_app/imgs.html', {'imgposts': imgposts,
-                                                    'tag_link': tag_link,})
+                                                    'tag_link': tag_link })
 
 
 # Загрузить новый файл
@@ -75,32 +72,17 @@ def new_mediafile(request):
     return render(request, 'gifcol_app/edit.html', {'form': form})
 
 
-#def bookmark_post(request, id):
-#    is_bookmarked = False
-#    post = get_object_or_404(Account, id=id)
-#    bookmarks = Account.bookmarks.filter(user=request.user).first()
-#    if post.bookmarks.filter(id=request.user.id).exists():
-#        post.bookmarks.remove(request.user)
-#        is_bookmarked = False
-#    else:
-#        post.bookmarks.add(request.user)
-#        is_bookmarked = True
-#    return render(
-#        request, 'accounts/user_profile.html', {'is_bookmarked': is_bookmarked}
-#    )
-
 def bookmark_post(request, id):
-    is_bookmarked = False
     post = get_object_or_404(Account, id=id)
     if post.bookmarks.filter(id=request.user.id).exists():
-        post.bookmarks.remove(request.user)
-        is_bookmarked = False
+        post.bookmarks.remove(id)
+        #is_bookmarked = False
+        return HttpResponse(status=204)
     else:
-        post.bookmarks.add(request.user)
-        is_bookmarked = True
-    return render(
-        request, 'accounts/user_profile.html', {'is_bookmarked': is_bookmarked}
-    )
+        post.bookmarks.add(id)
+        #is_bookmarked = True
+        return HttpResponse(status=204)
+
 
 
 class tag_link(View):

@@ -32,9 +32,13 @@
                         <img width="100%" height="100%" src="{{ meme.file.url }}">
                     </div>
                     <div class="col-sm-4">
+                        {% if is_bookmarked %}
+                        dsds
+                        {% else %}
                         <a href="{% url 'bookmark_post' id=meme.id%}">
                             Добавить в избранное <i class="fas fa-star"></i>
                         </a>
+                        {% endif %}
                         {%if Meme.title%}
                             <br>
                             Название: {{ meme.title }}

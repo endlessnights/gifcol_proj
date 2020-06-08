@@ -5,7 +5,6 @@ from gifcol_proj.base_models import TimeStamped, PublishedModel
 
 
 class Tag(TimeStamped, PublishedModel):
-
     title = models.CharField(
         verbose_name='Название',
         max_length=32,
