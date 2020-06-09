@@ -32,9 +32,13 @@
                         <video style="max-height:700px;" src="{{meme.file.url}}"></video>
                     </div>
                     <div class="col-sm-4">
-                        <a href="#">
+                         {% if is_bookmarked %}
+                        dsds
+                        {% else %}
+                        <a href="{% url 'bookmark_post' id=meme.id%}">
                             Добавить в избранное <i class="fas fa-star"></i>
                         </a>
+                        {% endif %}
                         {%if meme.title%}
                             <br>
                             Название: {{meme.title}}

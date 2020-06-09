@@ -65,6 +65,8 @@
                                         </a>
                                 {% endfor %}
                             {%endif%}
+                        <br>
+
                         </div>
                     </div>
                 </div>
@@ -72,9 +74,9 @@
         </div>
     {% endfor %}
     <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
-
+{% for meme in imgposts %}
     <script>
-        {% for meme in imgposts %}
+
             // Get the modal
             var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
 
@@ -100,6 +102,7 @@
                     modal{{ forloop.counter }}.style.display = "none";
                 }
             }
-        {% endfor %}
+
     </script>
+{% endfor %}
 {% endblock %}

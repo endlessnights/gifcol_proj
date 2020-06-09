@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import UpdateView
 from django.contrib.auth import (
-    authenticate, login as built_in_login, logout as built_in_logout
+    authenticate, login as built_in_login, logout as built_in_logout, get_user_model
 )
 
 from accounts.forms import EditProfileForm, UpdateProfileForm
@@ -15,6 +16,41 @@ from accounts.models import Account
 # Login form Auth
 from gifcol_app.models import Meme
 
+@require_POST
+def register(request):
+    username = request.POST.get('usernamereg')
+    password = request.POST.get('passwordreg')
+    password1 = request.POST.get('password1')
+
+    if not any(
+        [username, password, password1]
+    ):
+        return JsonResponse(
+            {'message': 'Form incorrect'}
+        )
+
+    if not password or not password1:
+        return JsonResponse(
+            {'message': 'Empty password'}
+        )
+
+    if password != password1:
+        return JsonResponse(
+            {'message': 'passwords did not match'}
+        )
+    user_model = get_user_model()
+
+    if user_model.objects.filter(username=username).first():
+        return JsonResponse(
+            {'message': 'User exists'}
+        )
+
+    user = user_model.objects.create_user(
+        username=username,
+        password=password
+    )
+
+    user.save()
 
 @require_POST
 def login(request):
@@ -89,3 +125,4 @@ class EditUserProfileView(UpdateView):
     def get_success_url(self, *args, **kwargs):
         user = get_object_or_404(Account, username=self.kwargs['username'])
         return reverse('get_user_profile', args=(user,))
+

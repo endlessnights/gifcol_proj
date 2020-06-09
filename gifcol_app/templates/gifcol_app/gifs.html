@@ -34,14 +34,12 @@
                     </div>
                     <div class="col-sm-4">
                         {% if is_bookmarked %}
-                            <a href="{% url 'bookmark_post' id=meme.id %}">В избранном
-                                <i class="fas fa-star"></i>
-                            </a>
+                        dsds
                         {% else %}
-                            <a href="{% url 'bookmark_post' id=meme.id %}">
-                                Добавить в избранное<i class="far fa-star"></i>
-                            </a>
-                        {%endif%}
+                        <a href="{% url 'bookmark_post' id=meme.id%}">
+                            Добавить в избранное <i class="fas fa-star"></i>
+                        </a>
+                        {% endif %}
                         {%if meme.title%}<br>
                             Название: {{meme.title}}{%endif%}
                         {%if meme.description %}

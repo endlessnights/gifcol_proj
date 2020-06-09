@@ -1,12 +1,13 @@
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from accounts.models import Account
 from .forms import MediaAddForm
-from django.contrib.auth import logout as built_in_logout
+from django.contrib.auth import logout as built_in_logout, get_user_model
 from .models import Meme, Tag
 
 
@@ -75,11 +76,11 @@ def new_mediafile(request):
 def bookmark_post(request, id):
     post = get_object_or_404(Account, id=id)
     if post.bookmarks.filter(id=request.user.id).exists():
-        post.bookmarks.remove(id)
+        post.bookmarks.remove(request.user)
         #is_bookmarked = False
         return HttpResponse(status=204)
     else:
-        post.bookmarks.add(id)
+        post.bookmarks.add(request.user)
         #is_bookmarked = True
         return HttpResponse(status=204)
 
@@ -92,3 +93,5 @@ class tag_link(View):
             request, 'gifcol_app/tag.html', {'tag_objects': tag_objects,
                                              'tag_link': tag_link}
         )
+
+

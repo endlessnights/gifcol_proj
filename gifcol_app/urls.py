@@ -4,10 +4,12 @@ from django.conf import settings
 from django.conf.urls import url
 
 from .views import gifpage, new_mediafile, videopage, imgpage, logout, tag_link, bookmark_post
+from accounts.views import register
 
 urlpatterns = [
     path('', gifpage, name='gifpage'),
     path(r'user/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('register/', register, name='register'),
     path('new/', new_mediafile, name='new_mediafile'),
     path('video/', videopage, name='videopage'),
     path('img/', imgpage, name='imgpage'),
