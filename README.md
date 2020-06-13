@@ -6,3 +6,10 @@ Library for memes and gifs
 pip install pillow
 
 pip install django-crispy-forms
+
+pip install boto3
+
+pip install django-storages
+
+В Installed_Apps добавляем:
+'storages',
