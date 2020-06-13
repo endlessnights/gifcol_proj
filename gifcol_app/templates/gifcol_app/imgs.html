@@ -39,6 +39,8 @@
                             Добавить в избранное <i class="fas fa-star"></i>
                         </a>
                         {% endif %}
+                        <br>
+                        <a title="Редактировать ТТ" class="btn btn-default" href="{% url 'edit_mediafile' pk=meme.pk %}"><b>Изменить запись</b></a>
                         {%if Meme.title%}
                             <br>
                             Название: {{ meme.title }}
