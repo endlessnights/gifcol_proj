@@ -65,7 +65,7 @@ class Meme(TimeStamped, PublishedModel):
     )
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
     class Meta:
         verbose_name = 'Загруженную запись'
