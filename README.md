@@ -11,5 +11,5 @@ pip install boto3
 
 pip install django-storages
 
-В Installed_Apps добавляем:
+В INSTALLED_APPS добавляем:
 'storages',
