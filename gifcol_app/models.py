@@ -12,7 +12,7 @@ class Tag(TimeStamped, PublishedModel):
     )
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
     class Meta:
         verbose_name = 'Тег'
@@ -61,12 +61,11 @@ class Meme(TimeStamped, PublishedModel):
         Tag,
         verbose_name='Теги',
         related_name='memes',
-        null=True,
         blank=True,
     )
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
     class Meta:
         verbose_name = 'Загруженную запись'
