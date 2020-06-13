@@ -1,3 +1,4 @@
+from django.db.models import Case, When, Value, BooleanField
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
@@ -17,56 +18,27 @@ def logout(request):
     return redirect('/')
 
 
-# Страница с Гифками
-def gifpage(request):
-    gifmemes = Meme.objects.published().filter(
-        filetype='gif',
+def abstract_page(request, filetype=None):
+    memes = Meme.objects.published().filter(
+        filetype=filetype or 'gif',
     ).order_by(
         '-created_at'
-    )
-    return render(
-        request,
-        'gifcol_app/gifs.html',
-        {
-            'gifmemes': gifmemes,
-            'tag_link': TagLink,
-        }
-    )
-
-
-# Страница с видео
-# Нужно еще добавить в фильтр filetype='link' - ссылка на видео и генерить youtube Iframe`ы
-def videopage(request):
-    videoposts = Meme.objects.filter(
-        filetype='video',
-    ).order_by(
-        '-created_at'
+    ).annotate(
+        bookmarked=Case(
+            When(
+                users_bookmarked__in=[request.user.id],
+                then=Value(True),
+            ),
+            default=Value(False),
+            output_field=BooleanField(),
+        )
     )
 
     return render(
         request,
-        'gifcol_app/videos.html',
+        'gifcol_app/memes_base.html',
         {
-            'videoposts': videoposts,
-            'tag_link': TagLink,
-        }
-    )
-
-
-# Страница с картинками
-def imgpage(request):
-    imgposts = Meme.objects.filter(
-        filetype='img',
-    ).order_by(
-        '-created_at'
-    )
-
-    return render(
-        request,
-        'gifcol_app/imgs.html',
-        {
-            'imgposts': imgposts,
-            'tag_link': TagLink
+            'memes': memes,
         }
     )
 
