@@ -57,6 +57,20 @@ def new_mediafile(request):
         form = MediaAddForm()
     return render(request, 'gifcol_app/edit.html', {'form': form})
 
+def edit_mediafile(request, pk):
+    post = get_object_or_404(Meme, pk=pk)
+    if request.method == "POST":
+        form = MediaEditForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.created_at = timezone.now()
+            post.save()
+        return redirect('/')
+    else:
+        form = MediaEditForm(instance=post)
+    return render(request, 'gifcol_app/edit_mediafile.html', {'form': form})
+
 
 def bookmark_post(request, id):
     post = get_object_or_404(Account, id=id)
