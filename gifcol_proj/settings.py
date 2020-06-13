@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'gifcol_app',
     'accounts',
     'crispy_forms',
+    'storages',
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'
@@ -48,6 +49,28 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+#Статик файлы - Js, img, css
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'gifcol_app/static'),
+]
+#данные для подключения к S3 Amazon
+AWS_ACCESS_KEY_ID = 'AKIASJDD27IPUCYA32QJ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'gifcol-bucket'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+
+DEFAULT_FILE_STORAGE = 'gifcol_proj.storage_backends.MediaStorage'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,5 +151,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '')
+#STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, '')

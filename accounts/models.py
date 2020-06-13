@@ -4,7 +4,6 @@ from django.db import models
 from gifcol_app.models import Meme
 from gifcol_proj.base_models import TimeStamped
 
-
 class Account(AbstractUser, TimeStamped):
     description = models.TextField(
         max_length=250,

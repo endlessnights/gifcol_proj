@@ -48,14 +48,14 @@ def videopage(request):
 
 # Страница с картинками
 def imgpage(request):
-    #is_bookmarked = False
+    # is_bookmarked = False
     imgposts = Meme.objects.filter(
         filetype='img',
     ).order_by(
         '-created_at'
     )
     return render(request, 'gifcol_app/imgs.html', {'imgposts': imgposts,
-                                                    'tag_link': tag_link })
+                                                    'tag_link': tag_link})
 
 
 # Загрузить новый файл
@@ -77,13 +77,12 @@ def bookmark_post(request, id):
     post = get_object_or_404(Account, id=id)
     if post.bookmarks.filter(id=request.user.id).exists():
         post.bookmarks.remove(request.user)
-        #is_bookmarked = False
+        # is_bookmarked = False
         return HttpResponse(status=204)
     else:
-        post.bookmarks.add(request.user)
-        #is_bookmarked = True
+        Account.bookmarks.add(Account.bookmarks.objects.get(id=id))
+        # is_bookmarked = True
         return HttpResponse(status=204)
-
 
 
 class tag_link(View):
@@ -93,5 +92,3 @@ class tag_link(View):
             request, 'gifcol_app/tag.html', {'tag_objects': tag_objects,
                                              'tag_link': tag_link}
         )
-
-
