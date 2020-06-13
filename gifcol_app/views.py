@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from accounts.models import Account
-from .forms import MediaAddForm
+from .forms import MediaAddForm, MediaEditForm
 from django.contrib.auth import logout as built_in_logout, get_user_model
 from .models import Meme, Tag
 
@@ -19,56 +19,43 @@ def logout(request):
 
 # Страница с Гифками
 def gifpage(request):
-    gifmemes = Meme.objects.published().filter(
+    is_bookmarked = False
+    gifmemes = Meme.objects.filter(
         filetype='gif',
     ).order_by(
         '-created_at'
     )
     return render(
         request,
-        'gifcol_app/gifs.html',
-        {
-            'gifmemes': gifmemes,
-            'tag_link': TagLink,
-        }
+        'gifcol_app/gifs.html', {'gifmemes': gifmemes,
+                                 'tag_link': TagLink,
+                                 }
     )
 
 
 # Страница с видео
 # Нужно еще добавить в фильтр filetype='link' - ссылка на видео и генерить youtube Iframe`ы
 def videopage(request):
+    is_bookmarked = False
     videoposts = Meme.objects.filter(
         filetype='video',
     ).order_by(
         '-created_at'
     )
-
-    return render(
-        request,
-        'gifcol_app/videos.html',
-        {
-            'videoposts': videoposts,
-            'tag_link': TagLink,
-        }
-    )
+    return render(request, 'gifcol_app/videos.html', {'videoposts': videoposts,
+                                                      'tag_link': TagLink, })
 
 
 # Страница с картинками
 def imgpage(request):
+    # is_bookmarked = False
     imgposts = Meme.objects.filter(
         filetype='img',
     ).order_by(
         '-created_at'
     )
-
-    return render(
-        request,
-        'gifcol_app/imgs.html',
-        {
-            'imgposts': imgposts,
-            'tag_link': TagLink
-        }
-    )
+    return render(request, 'gifcol_app/imgs.html', {'imgposts': imgposts,
+                                                    'tag_link': TagLink})
 
 
 # Загрузить новый файл
@@ -85,28 +72,38 @@ def new_mediafile(request):
         form = MediaAddForm()
     return render(request, 'gifcol_app/edit.html', {'form': form})
 
+def edit_mediafile(request, pk):
+    post = get_object_or_404(Meme, pk=pk)
+    if request.method == "POST":
+        form = MediaEditForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.created_at = timezone.now()
+            post.save()
+        return redirect('/')
+    else:
+        form = MediaEditForm(instance=post)
+    return render(request, 'gifcol_app/edit_mediafile.html', {'form': form})
+
+
 
 def bookmark_post(request, id):
     post = get_object_or_404(Account, id=id)
     if post.bookmarks.filter(id=request.user.id).exists():
         post.bookmarks.remove(request.user)
+        # is_bookmarked = False
         return HttpResponse(status=204)
     else:
-        post.bookmarks.add(request.user)
+        Account.bookmarks.add(Account.bookmarks.objects.get(id=id))
+        # is_bookmarked = True
         return HttpResponse(status=204)
 
 
 class TagLink(View):
-
     def get(self, request, tag_link):
         tag_objects = Meme.objects.filter(tags__title=tag_link)
         return render(
-            request,
-            'gifcol_app/tag.html',
-            {
-                'tag_objects': tag_objects,
-                'tag_link': tag_link
-            }
+            request, 'gifcol_app/tag.html', {'tag_objects': tag_objects,
+                                             'tag_link': tag_link}
         )
-
-
