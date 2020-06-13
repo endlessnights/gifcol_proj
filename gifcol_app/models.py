@@ -61,8 +61,6 @@ class Meme(TimeStamped, PublishedModel):
         Tag,
         verbose_name='Теги',
         related_name='memes',
-        null=True,
-        blank=True,
     )
 
     def __str__(self):
