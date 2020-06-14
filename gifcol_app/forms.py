@@ -12,7 +12,6 @@ class MediaAddForm(forms.ModelForm):
             'filetype',
             'medialink',
         )
-
 class MediaEditForm(forms.ModelForm):
     class Meta:
         model = Meme
