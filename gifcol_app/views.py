@@ -89,14 +89,12 @@ def edit_mediafile(request, pk):
 
 
 def bookmark_post(request, id):
-    post = get_object_or_404(Account, id=id)
-    if post.bookmarks.filter(id=request.user.id).exists():
-        post.bookmarks.remove(request.user)
-        # is_bookmarked = False
+    #post = get_object_or_404(Account, id=id)
+    if request.user.bookmarks.exists():
+        request.user.bookmarks.remove(id)
         return HttpResponse(status=204)
     else:
-        Account.bookmarks.add(Account.bookmarks.objects.get(id=id))
-        # is_bookmarked = True
+        request.user.bookmarks.add(id)
         return HttpResponse(status=204)
 
 
