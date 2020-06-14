@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from accounts.models import Account
-from .forms import MediaAddForm
+from .forms import MediaAddForm, MediaEditForm
 from django.contrib.auth import logout as built_in_logout, get_user_model
 from .models import Meme, Tag
 
@@ -73,12 +73,11 @@ def edit_mediafile(request, pk):
 
 
 def bookmark_post(request, id):
-    post = get_object_or_404(Account, id=id)
-    if post.bookmarks.filter(id=request.user.id).exists():
-        post.bookmarks.remove(request.user)
+    if request.user.bookmarks.filter(id=id):
+        request.user.bookmarks.remove(id)
         return HttpResponse(status=204)
     else:
-        post.bookmarks.add(request.user)
+        request.user.bookmarks.add(id)
         return HttpResponse(status=204)
 
 
