@@ -11,6 +11,7 @@ class MediaAddForm(forms.ModelForm):
             'file',
             'filetype',
             'medialink',
+            'published',
         )
 class MediaEditForm(forms.ModelForm):
     class Meta:

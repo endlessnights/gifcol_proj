@@ -21,6 +21,11 @@
                             <div class="col-md-12">
                                 <p class="control-label" id="textCounter" style="font:15px Arial;">Не более 200 символов</p>
                             </div>
+                            {% if request.user.is_superuser %}
+                            <div class="col-md-12">
+                            {{ form.published|as_crispy_field }}
+                            </div>
+                            {% endif %}
                             <div class="col-md-12">
                                 <button id="submitbtn" type="submit" class="btn btn-primary">Сохранить изменения</button>
                             </div>

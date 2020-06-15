@@ -40,6 +40,11 @@
                 <div class="col" id="id_media_link">
                     {{ form.medialink|as_crispy_field }}
                 </div>
+                {% if request.user.is_superuser %}
+                    <div class="col-md-12">
+                            {{ form.published|as_crispy_field }}
+                    </div>
+                            {% endif %}
                 <div class="w-100" style="padding-bottom:2%;"></div>
                 <div class="col">
                     <button id="submitbtn" type="submit" class="btn btn-primary">Загрузить файл</button>
