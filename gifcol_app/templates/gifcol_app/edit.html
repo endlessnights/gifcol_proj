@@ -52,6 +52,16 @@
             </div>
         </form>
         <script>
+$("form").submit(function() {
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+    var file = $('#id_file')[0].files[0];
+
+    if (file && file.size > 5 * 1024 * 1024) {
+      alert("Загружаемые файл " + file.name + " of type " + file.type + " превышает допустимый размер 5 Мб");
+      return false;
+    }
+  }
+});
             //text limit for text area
             $(document).ready(function() {
                 $('#id_desc').on('input propertychange', function() {

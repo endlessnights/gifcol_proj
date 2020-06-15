@@ -31,7 +31,7 @@ def abstract_page(request, filetype=None):
             default=Value(False),
             output_field=BooleanField(),
         )
-    ).distinct('id')
+    ).distinct()
 
     return render(
         request,

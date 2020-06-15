@@ -43,11 +43,13 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-12">
+                                {% if request.user.is_superuser %}
                                 {% if not meme.published %}
                                     <a href="{% url 'edit_mediafile' pk=meme.pk %}">
                                         <button id="submitbtn" type="submit" class="btn btn-primary">Опубликовать запись!</button>
                                     </a>
-                                {%endif%}
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <div class="col-md-12">
                                 {% if meme.bookmarked %}
@@ -58,12 +60,15 @@
                                     </a>
                                 {% endif %}
                             </div>
+
                             {% if meme.published %}
+                            {% if request.user ==  meme.author%}
                             <div class="col-md-12">
                                 <a href="{% url 'edit_mediafile' pk=meme.pk %}">Изменить запись
                                     <i class="far fa-edit"></i>
                                 </a>
                             </div>
+                            {% endif %}
                             {% endif %}
                             <div style="word-wrap:break-word;overflow-wrap:break-word;" class="col-md-12">
                                 {%if meme.title%}
@@ -75,8 +80,8 @@
                             </div>
                             <div class="col-md-12">
                                 Загрузил:
-                                {%if user.userprofile.avatar%}
-                                <img width="20" height="20" src="{{user.userprofile.avatar.url}}">
+                                {%if user.avatar%}
+                                <img width="20" height="20" src="{{user.avatar.url}}">
                                 {%endif%}
                                 <a href="/user/{{meme.author}}">
                                 {{meme.author}}

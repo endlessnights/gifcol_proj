@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.core.exceptions import ValidationError
 from gifcol_proj.base_models import TimeStamped, PublishedModel
 
 
@@ -18,6 +18,16 @@ class Tag(TimeStamped, PublishedModel):
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
+
+def validate_file_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]
+    valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.mov', '.mp4', '.avi']
+    if not ext in valid_extensions:
+        raise ValidationError(u'File not supported!')
+    limit = 5 * 1024 * 1024  # 5 Mb
+    if value.size > limit:
+        raise ValidationError('File too large. Size should not exceed 2 MiB.')
 
 class Meme(TimeStamped, PublishedModel):
     filetypes = (
@@ -44,6 +54,7 @@ class Meme(TimeStamped, PublishedModel):
     file = models.FileField(
         upload_to='file/',
         verbose_name='Файл',
+        validators=[validate_file_extension]
     )
     filetype = models.CharField(
         max_length=254,

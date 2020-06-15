@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '^qlwv-7vna2%ktm4$13i01b_u5@mu^b@l0@#wx9ec10_=_6v^a'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -53,7 +51,7 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'gifcol_app/static'),
 ]
-#данные для подключения к S3 Amazon
+# данные для подключения к S3 Amazon
 AWS_ACCESS_KEY_ID = 'AKIASJDD27IPUCYA32QJ'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'gifcol-bucket'
@@ -63,13 +61,14 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
-#AWS_LOCATION = 'static'
-#STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-#STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# AWS_LOCATION = 'static'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 
 DEFAULT_FILE_STORAGE = 'gifcol_proj.storage_backends.MediaStorage'
 
+MAX_UPLOAD_SIZE = 5242880
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -101,7 +100,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gifcol_proj.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -111,7 +109,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -132,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -145,7 +141,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
