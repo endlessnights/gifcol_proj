@@ -19,4 +19,5 @@ class MediaEditForm(forms.ModelForm):
             'title',
             'description',
             'medialink',
+            'published',
         )

@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls import url
 
-from .views import abstract_page, new_mediafile, logout, TagLink, bookmark_post, edit_mediafile
+from .views import abstract_page, new_mediafile, logout, TagLink, bookmark_post, edit_mediafile, moderate_unpub
 from accounts.views import register
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path(r'user/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('register/', register, name='register'),
     path('new/', new_mediafile, name='new_mediafile'),
+    path('moderate/', moderate_unpub, name='moderate_unpub'),
     path('file/<int:pk>/edit', edit_mediafile, name='edit_mediafile'),
     url(r'(?P<id>\d+)/bookmark/$', bookmark_post, name='bookmark_post'),
     path('logout/', logout, name='logout'),

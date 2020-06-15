@@ -17,7 +17,6 @@ def logout(request):
     built_in_logout(request)
     return redirect('/')
 
-
 def abstract_page(request, filetype=None):
     memes = Meme.objects.published().filter(
         filetype=filetype or 'gif',
@@ -94,4 +93,25 @@ class TagLink(View):
             }
         )
 
+def moderate_unpub(request):
+    memes = Meme.objects.filter(published=False,
+    ).order_by(
+        '-created_at'
+    ).annotate(
+        bookmarked=Case(
+            When(
+                users_bookmarked__in=[request.user.id],
+                then=Value(True),
+            ),
+            default=Value(False),
+            output_field=BooleanField(),
+        )
+    )
 
+    return render(
+        request,
+        'gifcol_app/memes_base.html',
+        {
+            'memes': memes,
+        }
+    )

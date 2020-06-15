@@ -1,5 +1,5 @@
 {% extends 'gifcol_app/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}
     <title>Гифки | Meme Archive</title>
 {% endblock %}
@@ -42,6 +42,15 @@
                     <div class="col-md-8"><img class="img-fluid" src="{{meme.file.url}}"></div>
                     <div class="col-md-4">
                         <div class="row">
+                            <div class="col-md-12">
+                                {% if meme.published %}
+                                <form method="post" enctype="multipart/form-data" style="padding-left:15px;">
+                                    {% csrf_token %}
+
+                                    <button id="submitbtn" type="submit" class="btn btn-primary">Опубликовать запись!</button>
+                                </form>
+                                {%endif%}
+                            </div>
                             <div class="col-md-12">
                                 {% if meme.bookmarked %}
                                     <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>

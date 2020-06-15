@@ -34,19 +34,27 @@
                 </ul>
                 <span class="navbar-text">
                     {% if user.is_authenticated %}
-                        <div class="btn-group" role="group">
+                    <div class="btn-group" role="group">
                             {% if request.user.is_superuser %}
-                              <button type="button" class="btn btn-danger">
-                                  <a style="color:white;" href="/admin">Django Admin</a>
-                              </button>
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop0" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Админка
+                                </button>
+                              <div class="dropdown-menu" style="min-width: 8rem;" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" href="/moderate"><button type="button" class="btn btn-warning">Moderate</button></a>
+                                  <a class="dropdown-item" href="/admin"><button type="button" class="btn btn-danger">Django Admin</button></a>
+                              </div>
+                            </div>
                             {%endif%}
+                    </div>
+                    <div class="btn-group" role="group">
                             <button type="button" class="btn btn-success">
                                 <a style="color:white;" href="/new">Загрузить файл</a>
                             </button>
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {%if user.userprofile.avatar%}
-                                     <img width="30" height="30" src="{{user.userprofile.avatar.url}}">
+                                    {%if user.avatar%}
+                                     <img width="30" height="30" src="{{user.avatar.url}}">
                                     {%endif%}
                                     {{request.user.get_short_name}} [{{request.user.username}}]
                                 </button>
