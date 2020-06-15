@@ -33,43 +33,51 @@
         <!-- The Modal -->
         <div id="myModal{{ forloop.counter }}" class="modal">
             <!-- Modal content -->
-            <div class="modal-content" style="width:900px;">
+            <div class="modal-content" style="max-width:60%;height:auto;">
                 <span style="padding-bottom:15px;" class="close-btn{{ forloop.counter }}" id="close-span">
                   <button style="padding:5px;">Вернуться</button>
                 </span>
-                <div class="row" align="left">
-                    <div class="col-sm-8">
-                        <img width="100%" height="100%" src="{{meme.file.url}}">
-                    </div>
-                    <div class="col-sm-4">
-                        {% if meme.bookmarked %}
-                            <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>
-                        {% else %}
-                            <a href="{% url 'bookmark_post' id=meme.id%}">
-                                Добавить в избранное <i class="far fa-star"></i>
-                            </a>
-                        {% endif %}
-                        <br>
-                        <a href="{% url 'edit_mediafile' pk=meme.pk %}">Изменить запись <i class="far fa-edit"></i></a>
-                        {%if meme.title%}<br>
-                            Название: {{meme.title}}{%endif%}
-                        {%if meme.description %}
-                            <br>Описание: {{meme.description }}
-                        {%endif%}
-                        <br>
-                        Загрузил:
 
-                        {%if user.userprofile.avatar%}
-                            <img width="20" height="20" src="{{user.userprofile.avatar.url}}">
-                        {%endif%}
-
-                        <a href="/user/{{meme.author}}">
-                            {{meme.author}}
-                        </a>
-                        <br>
-                        Дата загрузки: {{meme.created_at}}
-                        <br>
-                            {%if meme.tags %}
+                <div class="row">
+                    <div class="col-md-8"><img class="img-fluid" src="{{meme.file.url}}"></div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if meme.bookmarked %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>
+                                {% else %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">
+                                        Добавить в избранное <i class="far fa-star"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-12">
+                                <a href="{% url 'edit_mediafile' pk=meme.pk %}">Изменить запись
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </div>
+                            <div style="word-wrap:break-word;overflow-wrap:break-word;" class="col-md-12">
+                                {%if meme.title%}
+                                    Название: {{meme.title}}{%endif%}
+                                {%if meme.description %}
+                                <br>
+                                    Описание: {{meme.description }}
+                                {%endif%}
+                            </div>
+                            <div class="col-md-12">
+                                Загрузил:
+                                {%if user.userprofile.avatar%}
+                                <img width="20" height="20" src="{{user.userprofile.avatar.url}}">
+                                {%endif%}
+                                <a href="/user/{{meme.author}}">
+                                {{meme.author}}
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                Дата загрузки: {{meme.created_at}}
+                            </div>
+                            <div class="col-md-12">
+                                {%if meme.tags %}
                             Теги:
                                 {% for tag in meme.tags.published %}
                                     <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
@@ -77,7 +85,10 @@
                                     </a>
                                 {% endfor %}
                             {%endif%}
+                                <br>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
