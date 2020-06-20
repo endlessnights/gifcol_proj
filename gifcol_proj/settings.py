@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'gifcol_app',
     'accounts',
     'crispy_forms',
-    'letsencrypt',
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'
