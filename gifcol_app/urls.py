@@ -17,5 +17,4 @@ urlpatterns = [
     url(r'(?P<id>\d+)/bookmark/$', bookmark_post, name='bookmark_post'),
     path('logout/', logout, name='logout'),
     url(r'^tag/(?P<tag_link>[a-zA-Z0-9]+)$', TagLink.as_view(), name='tag_link'),
-    url(r'^\.well-known/', include('letsencrypt.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
