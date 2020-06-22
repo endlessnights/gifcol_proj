@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'gifcol_app',
     'accounts',
     'crispy_forms',
+    'storages',
 ]
 
 AUTH_USER_MODEL = 'accounts.Account'
@@ -54,7 +55,7 @@ STATICFILES_DIRS = [
 AWS_ACCESS_KEY_ID = 'AKIASJDD27IPUCYA32QJ'
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'gifcol-bucket'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
@@ -150,3 +151,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '')
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
