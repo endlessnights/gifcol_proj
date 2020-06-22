@@ -107,10 +107,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django_gifcol_1',
-        'USER' : 'root',
-        'PASSWORD' : '=4JXuVJnzm',
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432',
+        'USER': 'root',
+        'PASSWORD': '=4JXuVJnzm',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
