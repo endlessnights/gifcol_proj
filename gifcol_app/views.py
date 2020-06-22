@@ -17,6 +17,7 @@ def logout(request):
     built_in_logout(request)
     return redirect('/')
 
+
 def abstract_page(request, filetype=None):
     memes = Meme.objects.published().filter(
         filetype=filetype or 'gif',
@@ -56,6 +57,7 @@ def new_mediafile(request):
         form = MediaAddForm()
     return render(request, 'gifcol_app/edit.html', {'form': form})
 
+
 def edit_mediafile(request, pk):
     post = get_object_or_404(Meme, pk=pk)
     if request.method == "POST":
@@ -92,6 +94,7 @@ class TagLink(View):
                 'tag_link': tag_link
             }
         )
+
 
 def moderate_unpub(request):
     memes = Meme.objects.filter(published=False,
