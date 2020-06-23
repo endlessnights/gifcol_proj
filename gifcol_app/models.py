@@ -23,11 +23,12 @@ def validate_file_extension(value):
     import os
     ext = os.path.splitext(value.name)[1]
     valid_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.mov', '.mp4', '.avi']
-    if not ext in valid_extensions:
-        raise ValidationError(u'File not supported!')
+    if ext not in valid_extensions:
+        raise ValidationError('File not supported!')
     limit = 5 * 1024 * 1024  # 5 Mb
     if value.size > limit:
-        raise ValidationError('File too large. Size should not exceed 2 MiB.')
+        raise ValidationError('File too large. Size should not exceed 5 MiB.')
+
 
 class Meme(TimeStamped, PublishedModel):
     filetypes = (
