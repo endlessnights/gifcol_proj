@@ -42,7 +42,6 @@ class Account(AbstractUser, TimeStamped):
         verbose_name='Избранное',
         related_name='users_bookmarked',
         blank=True,
-        null=True,
     )
 
     class Meta:
