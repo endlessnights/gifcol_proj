@@ -17,21 +17,23 @@ def logout(request):
     built_in_logout(request)
     return redirect('/')
 
+
 def abstract_page(request, filetype=None):
+    bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
     memes = Meme.objects.published().filter(
         filetype=filetype or 'gif',
     ).order_by(
-        '-created_at'
+        'created_at'
     ).annotate(
         bookmarked=Case(
             When(
-                users_bookmarked__in=[request.user.id],
+                id__in=bookmarks,
                 then=Value(True),
             ),
             default=Value(False),
             output_field=BooleanField(),
         )
-    ).distinct()
+    )
 
     return render(
         request,
@@ -55,6 +57,7 @@ def new_mediafile(request):
     else:
         form = MediaAddForm()
     return render(request, 'gifcol_app/edit.html', {'form': form})
+
 
 def edit_mediafile(request, pk):
     post = get_object_or_404(Meme, pk=pk)
@@ -92,6 +95,7 @@ class TagLink(View):
                 'tag_link': tag_link
             }
         )
+
 
 def moderate_unpub(request):
     memes = Meme.objects.filter(published=False,
