@@ -14,3 +14,4 @@ six==1.15.0
 sqlparse==0.3.1
 urllib3==1.25.9
 view==0.1
+psycopg2==2.8.5
