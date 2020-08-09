@@ -101,15 +101,6 @@ def moderate_unpub(request):
     memes = Meme.objects.filter(published=False,
     ).order_by(
         '-created_at'
-    ).annotate(
-        bookmarked=Case(
-            When(
-                users_bookmarked__in=[request.user.id],
-                then=Value(True),
-            ),
-            default=Value(False),
-            output_field=BooleanField(),
-        )
     )
 
     return render(

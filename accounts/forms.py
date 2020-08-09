@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from accounts.models import Account
 
-class ReigsterNewUser(UserChangeForm):
+class RegisterNewUser(UserChangeForm):
     class Meta:
         model = User
         fields=(
@@ -44,9 +44,12 @@ class UpdateProfileForm(UserChangeForm):
         return user_profile
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    username = forms.CharField(max_length=30, required=False, help_text='', label='Имя пользователя:')
+    first_name = forms.CharField(max_length=30, required=False, help_text='', label='Имя:')
+    last_name = forms.CharField(max_length=30, required=False, help_text='', label='Фамилия:')
+    email = forms.EmailField(max_length=254, help_text='', label='E-mail:')
+    password1 = forms.CharField(widget=forms.PasswordInput(), max_length=127, help_text='', label='Пароль:')
+    password2 = forms.CharField(widget=forms.PasswordInput(), max_length=127, help_text='', label='Подтверждение пароля:')
 
     class Meta:
         model = get_user_model()

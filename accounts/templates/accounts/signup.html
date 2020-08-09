@@ -1,10 +1,37 @@
 {% extends 'gifcol_app/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-  <h2>Sign up</h2>
+<br>
+  <h2 style="margin-left:3em">Регистрация нового аккаунта</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign up</button>
+    <div class="row" style="margin-left:5em">
+        <div class="col-sm-4">
+            {{ form.username|as_crispy_field }}
+        </div>
+        <div class="col-sm-4">
+            {{ form.email|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row" style="margin-left:5em">
+        <div class="col-sm-4">
+            {{ form.password1|as_crispy_field }}
+        </div>
+        <div class="col-sm-4">
+            {{ form.password2|as_crispy_field }}
+        </div>
+    </div>
+    <div class="row" style="margin-left:5em">
+        <div class="col-sm-4">
+            {{ form.first_name|as_crispy_field }}
+        </div>
+        <div class="col-sm-4">
+            {{ form.last_name|as_crispy_field }}
+        </div>
+    </div>
+      <br>
+    <div class="row" style="margin-left:6em">
+      <button class="btn btn-success" type="submit">Создать аккаунт</button>
+    </div>
   </form>
 {% endblock %}
