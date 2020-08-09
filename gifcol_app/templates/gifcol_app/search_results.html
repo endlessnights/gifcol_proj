@@ -1,0 +1,146 @@
+{% extends 'gifcol_app/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    <title>Гифки | Meme Archive</title>
+{% endblock %}
+
+{% block content %}
+<h4 style="padding-left:20px;padding-top:10px;">Результаты поиска: <span class="badge badge-warning">{{ query }}</span></h4><br>
+    <div class="masonrygal bordered">
+        {% for meme in memes %}
+            <div class="brick">
+                <div class="hvrbox">
+                    <img src="{{ meme.file.url }}">
+                    <div class="hvrbox-layer_top">
+                        <div style="float:right;" id="myBtn{{ forloop.counter }}" class="hvrbox-zoom">
+                            <i style="font-size:24pt;" class="fas fa-search"></i>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="hvrbox-fav">
+                            {% if meme.bookmarked %}
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="В избранном" color="white" class="fas fa-star"></i></a>
+                        {% else %}
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="Добавить в избранное" color="white" class="far fa-star"></i>
+                            </a>
+                        {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% for meme in memes %}
+        <!-- The Modal -->
+        <div id="myModal{{ forloop.counter }}" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content" style="max-width:60%;height:auto;">
+                <span style="padding-bottom:15px;" class="close-btn{{ forloop.counter }}" id="close-span">
+                  <button style="padding:5px;">Вернуться</button>
+                </span>
+
+                <div class="row">
+                    <div class="col-sm-8"><img class="img-fluid" src="{{meme.file.url}}"></div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if request.user.is_superuser %}
+                                {% if not meme.published %}
+                                    <a href="{% url 'edit_mediafile' pk=meme.pk %}">
+                                        <button id="submitbtn" type="submit" class="btn btn-primary">Опубликовать запись!</button>
+                                    </a>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div class="col-sm-12">
+                                {% if meme.bookmarked %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>
+                                {% else %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">
+                                        Добавить в избранное <i class="far fa-star"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                            {% if meme.published %}
+                            {% if request.user ==  meme.author%}
+                            <div class="col-sm-12">
+                                <a href="{% url 'edit_mediafile' pk=meme.pk %}">Изменить запись
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <div style="word-wrap:break-word;overflow-wrap:break-word;" class="col-sm-12">
+                                {%if meme.title%}
+                                    Название: {{meme.title}}{%endif%}
+                                {%if meme.description %}
+                                <br>
+                                    Описание: {{meme.description }}
+                                {%endif%}
+                            </div>
+                            <div class="col-sm-12">
+                                Загрузил:
+                                {%if user.avatar%}
+                                <img width="20" height="20" src="{{user.avatar.url}}">
+                                {%endif%}
+                                <a href="/user/{{meme.author}}">
+                                {{meme.author}}
+                                </a>
+                            </div>
+                            <div class="col-sm-12">
+                                Дата загрузки: {{meme.created_at}}
+                            </div>
+                            <div class="col-sm-12">
+                                {%if meme.tags %}
+                            Теги:
+                                {% for tag in meme.tags.published %}
+                                    <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
+                                        {{ tag }}
+                                    </a>
+                                {% endfor %}
+                            {%endif%}
+                                <br>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
+
+    <script>
+        {% for meme in memes %}
+            // Get the modal
+            var modal{{ forloop.counter }} = document.getElementById("myModal{{ forloop.counter }}");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn{{ forloop.counter }}");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close-btn{{ forloop.counter }}")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function() {
+                modal{{ forloop.counter }}.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal{{ forloop.counter }}.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal{{ forloop.counter }}) {
+                    modal{{ forloop.counter }}.style.display = "none";
+                }
+            }
+        {% endfor %}
+    </script>
+{% endblock %}

@@ -2,7 +2,7 @@ from django.db.models import Case, When, Value, BooleanField
 from django.views import View
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
-
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
@@ -108,5 +108,30 @@ def moderate_unpub(request):
         'gifcol_app/memes_base.html',
         {
             'memes': memes,
+        }
+    )
+
+def abstract_page_search(request):
+    bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
+    query = request.GET.get('q')
+    memes = Meme.objects.published().filter(Q(title__icontains=query) | Q(title__icontains=query)).order_by(
+        'created_at'
+    ).annotate(
+        bookmarked=Case(
+            When(
+                id__in=bookmarks,
+                then=Value(True),
+            ),
+            default=Value(False),
+            output_field=BooleanField(),
+        )
+    )
+
+    return render(
+        request,
+        'gifcol_app/search_results.html',
+        {
+            'memes': memes,
+            'query': query,
         }
     )
