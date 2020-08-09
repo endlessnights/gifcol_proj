@@ -73,28 +73,26 @@ def logout(request):
 
 
 def get_user_profile(request, username):
-    #получаеми ия пользователя из url
+    #получаеми имя пользователя из url
     userprofile = Account.objects.get(username=username)
-    #список гифок, добавленных пользователем
+    #список гифок, добавленных конкретным пользователем
     imgs_added_by_user = Meme.objects.filter(
-        author=request.user,
+        author=userprofile,
         filetype='img'
     )  # список картинок, добавленных пользователем
     gifs_added_by_user = Meme.objects.filter(
-        author=request.user,
+        author=userprofile,
         filetype='gif'
     )  # список картинок, добавленных пользователем
     videos_added_by_user = Meme.objects.filter(
-        author=request.user,
+        author=userprofile,
         filetype='video'
     )  # список картинок, добавленных пользователем
-    #bookmarked_files = Account.bookmarks.filter(user=request.user)
     return render(request, 'accounts/user_profile.html', {
         "user": userprofile,
         "imgs_added_by_user": imgs_added_by_user,
         "gifs_added_by_user": gifs_added_by_user,
         "videos_added_by_user": videos_added_by_user,
-        #"bookmarked_files": bookmarked_files
     })
 
 

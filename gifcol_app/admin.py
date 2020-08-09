@@ -6,7 +6,7 @@ admin.site.site_header = 'Gif Collection admin page'
 
 @admin.register(Meme)
 class MemeAdmin(admin.ModelAdmin):
-    list_display = ('author', 'title', 'published', 'created_at')
+    list_display = ('author', 'filetype', 'title', 'published', 'created_at')
     autocomplete_fields = ('tags', )
     readonly_fields = ('created_at', 'updated_at')
 
