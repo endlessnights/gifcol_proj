@@ -6,7 +6,7 @@
     {% for meme in tag_objects %}
         {% if forloop.first %}
             <title>Тег {{ tag_link }} | Meme Archive</title>
-            <h4 style="padding-left:20px;">Результаты по тегу <span class="badge badge-success">{{ tag_link }}</span></h4><br>
+            <h4 style="padding-left:20px;padding-top:10px;">Результаты по тегу <span class="badge badge-success">{{ tag_link }}</span></h4><br>
         {% endif %}
     {%endfor%}
 <div class="masonrygal bordered">
@@ -18,9 +18,16 @@
                         <div style="float:right;" id="myBtn{{ forloop.counter }}" class="hvrbox-zoom">
                             <i style="font-size:24pt;" class="fas fa-search"></i>
                         </div>
+                        {% if user.is_authenticated %}
                         <div class="hvrbox-fav">
-                            <i class="fas fa-star"></i>
+                            {% if meme.bookmarked %}
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="В избранном" color="white" class="fas fa-star"></i></a>
+                            {% else %}
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="Добавить в избранное" color="white" class="far fa-star"></i>
+                            </a>
+                            {% endif %}
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -31,48 +38,82 @@
         <!-- The Modal -->
         <div id="myModal{{ forloop.counter }}" class="modal">
             <!-- Modal content -->
-            <div class="modal-content" style="width:900px;">
+            <div class="modal-content" style="max-width:60%;height:auto;">
                 <span style="padding-bottom:15px;" class="close-btn{{ forloop.counter }}" id="close-span">
-                  <button>Вернуться</button>
+                  <button style="padding:5px;">Вернуться</button>
                 </span>
-                <div class="row" align="left">
-                    <div class="col-sm-8">
-                        <img width="100%" height="100%" src="{{ meme.file.url }}">
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="">
-                            Добавить в избранное <i class="fas fa-star"></i>
-                        </a>
-                        {%if Meme.title%}
-                            <br>
-                            Название: {{ meme.title }}
-                        {%endif%}
-                        {%if meme.description %}
-                            <br>
-                            Описание: {{ meme.description }}
 
-                        {%endif%}
-                        <br>
-                        Загрузил:
-                        {%if user.avatar%}
-                            <img width="20" height="20" src="{{user.avatar.url}}">
-                        {%endif%}
-                        <a href="/user/{{meme.author}}">{{meme.author}}</a>
-                        <br>
-                        Дата загрузки: {{meme.created_at}}
-                        <br>
-                            {%if meme.tags %}
-                                Теги:
+                <div class="row">
+                    <div class="col-sm-8"><img class="img-fluid" src="{{meme.file.url}}"></div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if request.user.is_superuser %}
+                                {% if not meme.published %}
+                                    <a href="{% url 'edit_mediafile' pk=meme.pk %}">
+                                        <button id="submitbtn" type="submit" class="btn btn-primary">Опубликовать запись!</button>
+                                    </a>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div class="col-sm-12">
+                                {% if meme.bookmarked %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>
+                                {% else %}
+                                    <a href="{% url 'bookmark_post' id=meme.id%}">
+                                        Добавить в избранное <i class="far fa-star"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                            {% if meme.published %}
+                            {% if request.user ==  meme.author%}
+                            <div class="col-sm-12">
+                                <a href="{% url 'edit_mediafile' pk=meme.pk %}">Изменить запись
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            <div style="word-wrap:break-word;overflow-wrap:break-word;" class="col-sm-12">
+                                {%if meme.title%}
+                                    Название: {{meme.title}}{%endif%}
+                                {%if meme.description %}
+                                <br>
+                                    Описание: {{meme.description }}
+                                {%endif%}
+                            </div>
+                            <div class="col-sm-12">
+                                Загрузил:
+                                {%if user.avatar%}
+                                <img width="20" height="20" src="{{user.avatar.url}}">
+                                {%endif%}
+                                <a href="/user/{{meme.author}}">
+                                {{meme.author}}
+                                </a>
+                            </div>
+                            <div class="col-sm-12">
+                                Дата загрузки: {{meme.created_at}}
+                            </div>
+                            <div class="col-sm-12">
+                                {%if meme.tags %}
+                            Теги:
                                 {% for tag in meme.tags.published %}
-                                        <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
-                                            {{ tag }}
-                                        </a>
+                                    <a href="{% url 'tag_link' tag_link=tag.title %}" class="badge badge-success" style="padding:5px;margin:3px;">
+                                        {{ tag }}
+                                    </a>
                                 {% endfor %}
                             {%endif%}
+                                <br>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     {% endfor %}
     <!-- Цикл для передачи номера объекта в цикле в номер кнопки для PopUp окна -->
