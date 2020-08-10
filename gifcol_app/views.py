@@ -1,3 +1,5 @@
+from itertools import count
+
 from django.db.models import Case, When, Value, BooleanField
 from django.views import View
 from django.http import HttpResponse, JsonResponse
@@ -21,10 +23,10 @@ def logout(request):
 def abstract_page(request, filetype=None):
     bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
     memes = Meme.objects.published().filter(
-#        filetype=filetype or 'gif',
+        #        filetype=filetype or 'gif',
     ).order_by(
         'created_at'
-    )[:10] .annotate(
+    )[:10].annotate(
         bookmarked=Case(
             When(
                 id__in=bookmarks,
@@ -35,12 +37,18 @@ def abstract_page(request, filetype=None):
         )
     )
     tags = Tag.objects.published().filter()
+    users = get_user_model().objects.all()
+    userscount = get_user_model().objects.count()
+    userpostcount = Meme.objects.filter(author__username=request.user).count()
     return render(
         request,
         'gifcol_app/memes_base.html',
         {
             'memes': memes,
             'tags': tags,
+            'users': users,
+            'userscount': userscount,
+            'userpostcount': userpostcount,
         }
     )
 
@@ -100,7 +108,7 @@ class TagLink(View):
 
 def moderate_unpub(request):
     memes = Meme.objects.filter(published=False,
-    ).order_by(
+                                ).order_by(
         '-created_at'
     )
 
@@ -111,6 +119,7 @@ def moderate_unpub(request):
             'memes': memes,
         }
     )
+
 
 def search_posts(request):
     bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
