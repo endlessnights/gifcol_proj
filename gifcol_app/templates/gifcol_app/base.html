@@ -21,20 +21,18 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #BBC9DD;"> <!-- background-color: #e3f2fd; -->
-            <a class="navbar-brand" href="/">FunGif</a>
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #191919;"> <!-- background-color: #e3f2fd; -->
+            <a class="navbar-brand" style="color: #b0b0b0;" href="/">FunGif</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"> <a class="nav-link" href="/">Гифки</a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="/video">Видео</a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="/img">Картинки</a> </li>
+                <ul class="navbar-nav mr-auto" style="margin:auto">
+                    <li class="nav-item" style="display: flex;align-items: center;"> <a class="navtop-link" href="/">Гифки</a> </li>
+                    <li class="nav-item" style="display: flex;align-items: center;"> <a class="navtop-link" href="/video">Видео</a> </li>
+                    <li class="nav-item" style="display: flex;align-items: center;"> <a class="navtop-link" href="/img">Картинки</a> </li>
+                    <li class="nav-item"> <a class="navtop-link" href="/signup"><button type="button" class="btn btn-primary">Регистрация</button></a> </li>
                 </ul>
-                <form style="margin-right:2em;" action="{% url 'search_results' %}" method="get">
-                    <input name="q" type="text" placeholder="Поиск по записям...">
-                </form>
                 <span class="navbar-text">
                     {% if request.user.is_superuser %}
                     <div class="btn-group" role="group">
@@ -46,6 +44,9 @@
                               <div class="dropdown-menu" style="min-width: 8rem;" aria-labelledby="btnGroupDrop1">
                                   <a class="dropdown-item" href="/moderate"><button type="button" class="btn btn-warning">Moderate</button></a>
                                   <a class="dropdown-item" href="/admin"><button type="button" class="btn btn-danger">Django Admin</button></a>
+                                  <a class="dropdown-item" href="/admin/accounts/account/"><button type="button" class="btn btn-danger">Профили</button></a>
+                                  <a class="dropdown-item" href="/admin/gifcol_app/meme/"><button type="button" class="btn btn-danger">Записи</button></a>
+                                  <a class="dropdown-item" href="/admin/gifcol_app/tag/"><button type="button" class="btn btn-danger">Теги</button></a>
                               </div>
                             </div>
 
@@ -79,7 +80,6 @@
                             <input class="form-control mb-2 mr-sm-2" type="password" name="password" placeholder="Введите пароль">
                             <button class="btn btn-secondary mb-2" type="submit">Войти</button>
                         </form>
-                        <a href="/signup"><button class="btn btn-warning mb-2" type="submit">Регистрация</button></a>
                     </div>
                     {%endif%}
                 </span>

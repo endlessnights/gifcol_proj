@@ -21,10 +21,10 @@ def logout(request):
 def abstract_page(request, filetype=None):
     bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
     memes = Meme.objects.published().filter(
-        filetype=filetype or 'gif',
+#        filetype=filetype or 'gif',
     ).order_by(
         'created_at'
-    ).annotate(
+    )[:10] .annotate(
         bookmarked=Case(
             When(
                 id__in=bookmarks,
@@ -34,12 +34,13 @@ def abstract_page(request, filetype=None):
             output_field=BooleanField(),
         )
     )
-
+    tags = Tag.objects.published().filter()
     return render(
         request,
         'gifcol_app/memes_base.html',
         {
             'memes': memes,
+            'tags': tags,
         }
     )
 
@@ -111,10 +112,10 @@ def moderate_unpub(request):
         }
     )
 
-def abstract_page_search(request):
+def search_posts(request):
     bookmarks = request.user.bookmarks.values_list('id', flat=True) if request.user.is_authenticated else [0]
     query = request.GET.get('q')
-    memes = Meme.objects.published().filter(Q(title__icontains=query) | Q(title__icontains=query)).order_by(
+    memes = Meme.objects.published().filter(Q(title__icontains=query) | Q(tags__title=query)).order_by(
         'created_at'
     ).annotate(
         bookmarked=Case(
@@ -125,7 +126,7 @@ def abstract_page_search(request):
             default=Value(False),
             output_field=BooleanField(),
         )
-    )
+    ).distinct()
 
     return render(
         request,
