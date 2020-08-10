@@ -1,5 +1,5 @@
 from itertools import count
-
+from django.db.models import Count
 from django.db.models import Case, When, Value, BooleanField
 from django.views import View
 from django.http import HttpResponse, JsonResponse
@@ -39,7 +39,8 @@ def abstract_page(request, filetype=None):
     tags = Tag.objects.published().filter()
     users = get_user_model().objects.all()
     userscount = get_user_model().objects.count()
-    userpostcount = Meme.objects.filter(author__username=request.user).count()
+    #userpostcount = Meme.objects.filter(author__username=request.user).count()
+    userpostcount = Account.objects.annotate(post_count=Count(Meme.author))
     return render(
         request,
         'gifcol_app/memes_base.html',

@@ -144,9 +144,12 @@
                 {% for user in users %}
                 <div class="col-sm-2">
                     {%if user.avatar%}
-                    <img width="96" height="96" src="{{user.avatar.url}}"><br>
+                    <a href="/user/{{user.username}}">
+                        <img width="96" height="96" style="border-radius:5px;" src="{{user.avatar.url}}">
+                    </a>
+                    <br>
                     {%endif%}
-                    <a href="/user/{{user.username}}">{{user.username}}</a> ({{userpostcount}})
+                    <a href="/user/{{user.username}}">{{user.username}}</a> ({{userpostcount.post_count__count}})
                 </div>
                 {% endfor %}
             </div>
