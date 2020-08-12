@@ -26,7 +26,11 @@
         {% for meme in memes %}
             <div class="brick">
                 <div class="hvrbox">
+                    {% if meme.filetype == 'video' %}
+                    <video><source src="{{ meme.file.url }}"></video>
+                    {% else %}
                     <img src="{{ meme.file.url }}">
+                    {% endif %}
                     <div class="hvrbox-layer_top">
                         <div style="float:right;" id="myBtn{{ forloop.counter }}" class="hvrbox-zoom">
                             <i style="font-size:24pt;" class="fas fa-search"></i>
@@ -34,9 +38,9 @@
                         {% if user.is_authenticated %}
                         <div class="hvrbox-fav">
                             {% if meme.bookmarked %}
-                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="В избранном" color="white" class="fas fa-star"></i></a>
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i onclick="myFunction(this)" title="В избранном" color="white" class="fas fa-star"></i></a>
                         {% else %}
-                            <a href="{% url 'bookmark_post' id=meme.id%}"><i title="Добавить в избранное" color="white" class="far fa-star"></i>
+                            <a href="{% url 'bookmark_post' id=meme.id%}"><i onclick="myFunction(this)" title="Добавить в избранное" color="white" class="fas fa-thumbs-up"></i>
                             </a>
                         {% endif %}
                         </div>
@@ -46,6 +50,14 @@
             </div>
         {% endfor %}
     </div>
+
+<script>
+function myFunction(x) {
+  x.classList.toggle("fa-star");
+  x.classList.toggle("fa-thumbs-up");
+}
+</script>
+
 
     {% for meme in memes %}
         <!-- The Modal -->
@@ -57,7 +69,13 @@
                 </span>
 
                 <div class="row">
-                    <div class="col-sm-8"><img class="img-fluid" src="{{meme.file.url}}"></div>
+                    <div class="col-sm-8">
+                        {% if meme.filetype == 'video' %}
+                        <video> controls autoplay<source src="{{ meme.file.url }}"></video>
+                        {% else %}
+                        <img class="img-fluid" src="{{meme.file.url}}">
+                        {% endif %}
+                    </div>
                     <div class="col-sm-4">
                         <div class="row">
                             <div class="col-sm-12">
@@ -72,10 +90,10 @@
                             {% if user.is_authenticated %}
                             <div class="col-sm-12">
                                 {% if meme.bookmarked %}
-                                    <a href="{% url 'bookmark_post' id=meme.id%}">В избранном <i class="fas fa-star"></i></a>
+                                    <a href="{% url 'bookmark_post' id=meme.id%}"> <i title="В избранном" onclick="myFunction(this)" class="fas fa-star"></i></a>
                                 {% else %}
                                     <a href="{% url 'bookmark_post' id=meme.id%}">
-                                        Добавить в избранное <i class="far fa-star"></i>
+                                         <i title="Добавить в избранное" onclick="myFunction(this)" class="fas fa-thumbs-up"></i>
                                     </a>
                                 {% endif %}
                             </div>
@@ -149,7 +167,7 @@
                     </a>
                     <br>
                     {%endif%}
-                    <a href="/user/{{user.username}}">{{user.username}}</a> ({{userpostcount.post_count__count}})
+                    <a href="/user/{{user.username}}">{{user.username}}</a> ({{userpostcount.post_count}})
                 </div>
                 {% endfor %}
             </div>
