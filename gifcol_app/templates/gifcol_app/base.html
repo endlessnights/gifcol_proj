@@ -53,10 +53,7 @@
                     </div>
                     {%endif%}
                     {% if request.user.is_authenticated %}
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success">
-                            <a style="color:white;" href="/new">Загрузить файл</a>
-                        </button>
+                            <a style="color:white;" href="/new"><button type="button" class="btn btn-success">Загрузить файл</button></a>
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {%if user.avatar%}
