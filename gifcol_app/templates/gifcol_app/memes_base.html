@@ -167,7 +167,16 @@ function myFunction(x) {
                     </a>
                     <br>
                     {%endif%}
-                    <a href="/user/{{user.username}}">{{user.username}}</a> ({{userpostcount.post_count}})
+                    
+                    
+                    <a href="/user/{{user.username}}">{{user.username}}</a> -- 
+                    {% if user.post_count > 0 %}
+                       Количество постов: {{user.post_count}} 
+                    {% else %}
+                        Постов не обнаружено
+
+                    {% endif %}
+                      
                 </div>
                 {% endfor %}
             </div>

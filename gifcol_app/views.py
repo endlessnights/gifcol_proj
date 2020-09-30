@@ -37,11 +37,11 @@ def abstract_page(request, filetype=None):
         )
     )
     tags = Tag.objects.published().filter()
-    users = get_user_model().objects.all()
-    userscount = get_user_model().objects.count()
-    # userpostcount = Meme.objects.filter(author__username=request.user).count()
-    # userpostcount = Account.objects.annotate(post_count=Count(Meme.author))
-    userpostcount = Account.objects.annotate(post_count=Count(Meme.author)).filter(username__in=[users])
+    users = Account.objects.all().annotate(post_count=Count('meme'))
+    userscount = Account.objects.count()
+
+    
+    
     return render(
         request,
         'gifcol_app/memes_base.html',
@@ -50,7 +50,8 @@ def abstract_page(request, filetype=None):
             'tags': tags,
             'users': users,
             'userscount': userscount,
-            'userpostcount': userpostcount,
+            
+
         }
     )
 
