@@ -1,5 +1,6 @@
 # gifcol_proj
-Library for images, videos & gifs
+Library for images, videos & gifs using Django 
+(Python)
 
 What is available:
 
