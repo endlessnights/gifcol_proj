@@ -52,8 +52,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'gifcol_app/static'),
 ]
 # данные для подключения к S3 Amazon
-AWS_ACCESS_KEY_ID = 'AKIASJDD27IPUCYA32QJ'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 
+AWS_SECRET_ACCESS_KEY = 
 AWS_STORAGE_BUCKET_NAME = 'gifcol-bucket'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
