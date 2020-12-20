@@ -1,5 +1,5 @@
 # gifcol_proj
-Library for memes and gifs
+Library for images, videos & gifs
 
 What is available:
 
